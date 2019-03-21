@@ -8,7 +8,7 @@ describe('MatchupCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchupCardComponent ]
+      declarations: [ MatchupCardComponent ],
     })
     .compileComponents();
   }));
