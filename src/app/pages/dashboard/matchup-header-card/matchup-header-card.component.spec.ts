@@ -8,7 +8,7 @@ describe('MatchupHeaderCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchupHeaderCardComponent ]
+      declarations: [ MatchupHeaderCardComponent ],
     })
     .compileComponents();
   }));

@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'ngx-matchup-card-row',
   templateUrl: './matchup-card-row.component.html',
-  styleUrls: ['./matchup-card-row.component.scss']
+  styleUrls: ['./matchup-card-row.component.scss'],
 })
 export class MatchupCardRowComponent implements OnInit {
 
