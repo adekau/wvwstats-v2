@@ -9,8 +9,12 @@ const routes: Routes = [{
   path: '',
   component: PagesComponent,
   children: [{
-    path: 'dashboard',
+    path: 'na',
     component: DashboardComponent,
+  }, {
+    path: '',
+    redirectTo: 'na',
+    pathMatch: 'full',
   }, {
     path: '**',
     component: NotFoundComponent,
