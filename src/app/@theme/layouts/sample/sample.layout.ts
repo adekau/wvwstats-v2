@@ -16,7 +16,7 @@ import { StateService } from '../../../@core/utils';
   selector: 'ngx-sample-layout',
   styleUrls: ['./sample.layout.scss'],
   template: `
-    <nb-layout [center]="layout.id === 'center-column'" windowMode>
+    <nb-layout [center]="layout.id === 'center-column'">
       <nb-layout-header fixed>
         <ngx-header [position]="sidebar.id === 'start' ? 'normal': 'inverse'"></ngx-header>
       </nb-layout-header>
@@ -30,14 +30,6 @@ import { StateService } from '../../../@core/utils';
 
       <nb-layout-column class="main-content">
         <ng-content select="router-outlet"></ng-content>
-      </nb-layout-column>
-
-      <nb-layout-column start class="small" *ngIf="layout.id === 'two-column' || layout.id === 'three-column'">
-        <nb-menu [items]="subMenu"></nb-menu>
-      </nb-layout-column>
-
-      <nb-layout-column class="small" *ngIf="layout.id === 'three-column'">
-        <nb-menu [items]="subMenu"></nb-menu>
       </nb-layout-column>
 
       <nb-layout-footer fixed>
