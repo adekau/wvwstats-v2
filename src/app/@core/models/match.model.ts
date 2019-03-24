@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 
 export interface Match {
-    
+    id: string;
 }
 
 export abstract class MatchData {

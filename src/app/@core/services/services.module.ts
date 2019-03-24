@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatchService } from './match.service';
 
 const SERVICES = [
-  MatchService
+  MatchService,
 ];
 
 @NgModule({

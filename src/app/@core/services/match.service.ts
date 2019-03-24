@@ -8,9 +8,9 @@ import { HttpClient } from '@angular/common/http';
 const BUFFER_SIZE: number = 1;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class MatchService extends MatchData{
+export class MatchService extends MatchData {
   private matches$: Observable<Match[]>;
 
   constructor(private http: HttpClient) {
@@ -19,12 +19,12 @@ export class MatchService extends MatchData{
 
   get matches(): Observable<Match[]> {
     if (!this.matches$) {
-      let timer$ = timer(0, 10000);
+      const timer$ = timer(0, 10000);
       this.matches$ = timer$.pipe(
         switchMap(_ => this.requestMatches()),
-        shareReplay(BUFFER_SIZE)
+        shareReplay(BUFFER_SIZE),
       );
-    } 
+    }
 
     return this.matches$;
   }
