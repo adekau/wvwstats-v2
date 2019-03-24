@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from './api.config';
-import { Match, MatchData } from '../models/match.model';
+import { IMatch, AllMatches, MatchData } from '../models/match.model';
 import { Observable, timer } from 'rxjs';
-import { shareReplay, switchMap } from 'rxjs/operators';
+import { shareReplay, switchMap, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 const BUFFER_SIZE: number = 1;
@@ -11,13 +11,13 @@ const BUFFER_SIZE: number = 1;
   providedIn: 'root',
 })
 export class MatchService extends MatchData {
-  private matches$: Observable<Match[]>;
+  private matches$: Observable<AllMatches>;
 
   constructor(private http: HttpClient) {
     super();
   }
 
-  get matches(): Observable<Match[]> {
+  get matches(): Observable<AllMatches> {
     if (!this.matches$) {
       const timer$ = timer(0, 10000);
       this.matches$ = timer$.pipe(
@@ -29,7 +29,9 @@ export class MatchService extends MatchData {
     return this.matches$;
   }
 
-  requestMatches(): Observable<Match[]> {
-    return this.http.get<Match[]>(API_ROUTES.allMatches);
+  requestMatches(): Observable<AllMatches> {
+    return this.http.get<IMatch[]>(API_ROUTES.allMatches).pipe(
+      map(res => new AllMatches(res)),
+    );
   }
 }
