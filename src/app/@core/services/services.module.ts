@@ -1,7 +1,10 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatchService } from './match.service';
 
-const SERVICES = [];
+const SERVICES = [
+  MatchService
+];
 
 @NgModule({
   imports: [
@@ -11,10 +14,10 @@ const SERVICES = [];
     ...SERVICES,
   ],
 })
-export class MockDataModule {
+export class ServicesModule {
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
-      ngModule: MockDataModule,
+      ngModule: ServicesModule,
       providers: [
         ...SERVICES,
       ],

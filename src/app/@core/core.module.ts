@@ -10,7 +10,7 @@ import {
   StateService,
 } from './utils';
 
-import { MockDataModule } from './mock/mock-data.module';
+import { ServicesModule } from './services/services.module';
 
 const DATA_SERVICES = [
   // example { provide: UserData, useClass: UserService },
@@ -24,7 +24,7 @@ export class NbSimpleRoleProvider extends NbRoleProvider {
 }
 
 export const NB_CORE_PROVIDERS = [
-  ...MockDataModule.forRoot().providers,
+  ...ServicesModule.forRoot().providers,
   ...DATA_SERVICES,
 
   NbSecurityModule.forRoot({
