@@ -3,9 +3,9 @@
 @import '~@nebular/theme/styles/global/breakpoints';
 
 @include nb-install-component() {
-  .solar-card nb-card-header {
-    border: none;
-    padding-bottom: 0;
+  .wvwstats-ct {
+    display: flex;
+    justify-content: center;
   }
 
   @include media-breakpoint-down(sm) {

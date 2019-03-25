@@ -1,8 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatchService } from '../../@core/services/match.service';
-import { AllMatches } from '../../@core/models/match.model';
 import { Observable, Subscription } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
+import { MatchCollection } from '../../@core/models/matchcollection.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -10,17 +12,39 @@ import { GW2Region } from '../../@core/enums/gw2region.enum';
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnDestroy, OnInit {
-  private matches$: Observable<AllMatches>;
-  private subscription: Subscription;
+  private matches$: Observable<MatchCollection>;
+  subscription: Subscription;
+  matches: MatchCollection = new MatchCollection();
 
-  constructor(protected matchService: MatchService) { }
+  constructor(
+    protected matchService: MatchService,
+    protected route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.matches$ = this.matchService.matches;
-    this.subscription = this.matches$.subscribe((res: AllMatches) => console.log(res.find(GW2Region.EU, 3).start));
+    this.subscription = this.route.url
+      .pipe(
+        mergeMap(reg =>
+          this.matches$.pipe(
+            map(matches => matches.region(this.regionFromString(reg[0].path))),
+          ),
+        ),
+      )
+      .subscribe(matches => (this.matches = matches));
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  regionFromString(str: string): GW2Region {
+    if (str === 'na') {
+      return GW2Region.NA;
+    } else if (str === 'eu') {
+      return GW2Region.EU;
+    } else {
+      throw new Error('Unknown region string entered.');
+    }
   }
 }

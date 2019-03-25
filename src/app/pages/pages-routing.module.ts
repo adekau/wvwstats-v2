@@ -12,6 +12,9 @@ const routes: Routes = [{
     path: 'na',
     component: DashboardComponent,
   }, {
+    path: 'eu',
+    component: DashboardComponent,
+  }, {
     path: '',
     redirectTo: 'na',
     pathMatch: 'full',

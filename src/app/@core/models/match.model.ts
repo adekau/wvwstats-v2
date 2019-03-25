@@ -5,7 +5,7 @@ import { MatchDeaths } from './matchdeaths.model';
 import { MatchVictoryPoints } from './matchvictorypoints.model';
 import { Skirmish } from './skirmish.model';
 import { Map } from './maps.model';
-import { GW2Region } from '../enums/gw2region.enum';
+import { MatchCollection } from './matchcollection.model';
 
 export interface IMatch {
     id: string;
@@ -21,8 +21,8 @@ export interface IMatch {
 }
 
 export abstract class MatchData {
-    abstract get matches(): Observable<AllMatches>;
-    abstract requestMatches(): Observable<AllMatches>;
+    abstract get matches(): Observable<MatchCollection>;
+    abstract requestMatches(): Observable<MatchCollection>;
 }
 
 export class Match implements IMatch {
@@ -66,18 +66,5 @@ export class Match implements IMatch {
 
     get end() {
         return new Date(this.end_time);
-    }
-}
-
-export class AllMatches {
-    matches: Match[];
-
-    constructor(response: IMatch[]) {
-        this.matches = response.map((match: IMatch) => new Match(match));
-    }
-
-    find(region: GW2Region, tier: number): Match {
-        const matchId = `${region.valueOf()}-${tier}`;
-        return this.matches.filter(match => matchId === match.id)[0];
     }
 }
