@@ -1,14 +1,14 @@
-import { Observable } from "rxjs";
-import { IMatchWorlds, IMatchAllWorlds, MatchWorlds, MatchAllWorlds } from "./matchworlds.model";
-import { MatchKills } from "./matchkills.model";
-import { MatchDeaths } from "./matchdeaths.model";
-import { MatchVictoryPoints } from "./matchvictorypoints.model";
-import { Skirmish } from "./skirmish.model";
-import { Map } from "./maps.model";
-import { MatchCollection } from "../collections/match.collection";
-import { IServerMatchInfo } from "./servermatchinfo.model";
-import { MatchScores } from "./matchscores.model";
-import { WorldCollection } from "../collections/world.collection";
+import { Observable } from 'rxjs';
+import { IMatchWorlds, IMatchAllWorlds, MatchWorlds, MatchAllWorlds } from './matchworlds.model';
+import { MatchKills } from './matchkills.model';
+import { MatchDeaths } from './matchdeaths.model';
+import { MatchVictoryPoints } from './matchvictorypoints.model';
+import { Skirmish } from './skirmish.model';
+import { Map } from './maps.model';
+import { MatchCollection } from '../collections/match.collection';
+import { IServerMatchInfo } from './servermatchinfo.model';
+import { MatchScores } from './matchscores.model';
+import { WorldCollection } from '../collections/world.collection';
 
 export interface IMatch {
   id: string;
@@ -82,7 +82,7 @@ export class Match implements IMatch {
       score: this.scores[color],
       world: this.matchWorlds[color],
       victory_points: this.victory_points[color],
-      skirmish_score: this.skirmishes[this.skirmishes.length - 1].scores[color]
+      skirmish_score: this.skirmishes[this.skirmishes.length - 1].scores[color],
     };
   }
 }

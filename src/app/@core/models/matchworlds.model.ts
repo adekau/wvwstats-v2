@@ -1,5 +1,5 @@
-import { World, IWorld } from "./world.model";
-import { WorldCollection } from "../collections/world.collection";
+import { World, IWorld } from './world.model';
+import { WorldCollection } from '../collections/world.collection';
 
 export interface IMatchWorlds {
     red: number;

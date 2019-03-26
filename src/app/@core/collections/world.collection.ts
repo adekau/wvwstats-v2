@@ -1,4 +1,4 @@
-import { IWorld, World } from "../models/world.model";
+import { IWorld, World } from '../models/world.model';
 
 export class WorldCollection {
   worlds: Array<World> = [];

@@ -1,20 +1,20 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Match } from "../../../../@core/models/match.model";
-import { IServerMatchInfo } from "../../../../@core/models/servermatchinfo.model";
+import { Component, OnInit, Input } from '@angular/core';
+import { Match } from '../../../../@core/models/match.model';
+import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 
 @Component({
-  selector: "ngx-matchup-card-row",
-  templateUrl: "./matchup-card-row.component.html",
-  styleUrls: ["./matchup-card-row.component.scss"]
+  selector: 'ngx-matchup-card-row',
+  templateUrl: './matchup-card-row.component.html',
+  styleUrls: ['./matchup-card-row.component.scss'],
 })
 export class MatchupCardRowComponent implements OnInit {
   @Input() rank: number;
   @Input() match: Match;
 
-  rankColor: string = "";
+  rankColor: string = '';
   info: IServerMatchInfo;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.rankColor = this.getRankColor();
@@ -26,25 +26,25 @@ export class MatchupCardRowComponent implements OnInit {
 
   getRankColor() {
     if (this.rank === 1) {
-      return "success";
+      return 'success';
     } else if (this.rank === 2) {
-      return "info";
+      return 'info';
     } else if (this.rank === 3) {
-      return "danger lowscore";
+      return 'danger lowscore';
     } else {
-      throw new Error("Invalid rank provided to matchup-card-row.");
+      throw new Error('Invalid rank provided to matchup-card-row.');
     }
   }
 
   getServerColor() {
     if (this.rank === 1) {
-      return "green";
+      return 'green';
     } else if (this.rank === 2) {
-      return "blue";
+      return 'blue';
     } else if (this.rank === 3) {
-      return "red";
+      return 'red';
     } else {
-      throw new Error("Invalid rank provided to matchup-card-row.");
+      throw new Error('Invalid rank provided to matchup-card-row.');
     }
   }
 }

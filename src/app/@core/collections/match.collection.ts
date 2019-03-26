@@ -1,6 +1,6 @@
-import { Match, IMatch } from "../models/match.model";
-import { GW2Region } from "../enums/gw2region.enum";
-import { WorldCollection } from "./world.collection";
+import { Match, IMatch } from '../models/match.model';
+import { GW2Region } from '../enums/gw2region.enum';
+import { WorldCollection } from './world.collection';
 
 export class MatchCollection {
   matches: Match[] = [];
@@ -8,11 +8,11 @@ export class MatchCollection {
 
   constructor(
     response: IMatch[] = [],
-    worlds: WorldCollection = new WorldCollection()
+    worlds: WorldCollection = new WorldCollection(),
   ) {
     this.worlds = worlds;
     this.matches = response.map(
-      (match: IMatch) => new Match(match, this.worlds)
+      (match: IMatch) => new Match(match, this.worlds),
     );
   }
 
@@ -25,7 +25,7 @@ export class MatchCollection {
     const matchId = `${region.valueOf()}-`;
     return new MatchCollection(
       this.matches.filter(match => match.id.startsWith(matchId)),
-      this.worlds
+      this.worlds,
     );
   }
 

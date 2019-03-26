@@ -1,5 +1,5 @@
-import { Observable } from "rxjs";
-import { WorldCollection } from "../collections/world.collection";
+import { Observable } from 'rxjs';
+import { WorldCollection } from '../collections/world.collection';
 
 export interface IWorld {
     id: number;
@@ -7,7 +7,7 @@ export interface IWorld {
     population: string;
 }
 
-export class World implements IWorld{
+export class World implements IWorld {
     id: number;
     name: string;
     population: string;

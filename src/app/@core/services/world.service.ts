@@ -9,7 +9,7 @@ import { map, shareReplay } from 'rxjs/operators';
 const BUFFER_SIZE: number = 1;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WorldService extends WorldData {
 
@@ -24,8 +24,8 @@ export class WorldService extends WorldData {
       this.worlds$ = this.requestWorlds().pipe(
         shareReplay(BUFFER_SIZE),
       );
-    } 
-    
+    }
+
     return this.worlds$;
   }
 
