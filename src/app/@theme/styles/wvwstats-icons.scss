@@ -1,5 +1,5 @@
 @mixin wvwstats-icons() {
-  [class^='wvwstats-icon-'], [class*=' wvwstats-icon-'] {
+  [class^='wvwstats-icon-'], [class*='wvwstats-icon-'] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'gwtwo' !important;
     speak: none;

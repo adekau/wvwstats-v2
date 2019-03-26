@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Match } from '../../../@core/models/match.model';
 
 @Component({
   selector: 'ngx-matchup-card',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchupCardComponent implements OnInit {
 
+  @Input() match: Match;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
 }

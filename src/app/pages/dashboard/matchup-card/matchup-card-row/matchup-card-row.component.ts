@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Match } from '../../../../@core/models/match.model';
+import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 
 @Component({
   selector: 'ngx-matchup-card-row',
@@ -7,14 +9,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MatchupCardRowComponent implements OnInit {
 
-  @Input('rank') rank: number;
+  @Input() rank: number;
+  @Input() match: Match;
 
-  protected rankColor: string = '';
+  rankColor: string = '';
+  info: IServerMatchInfo;
 
   constructor() { }
 
   ngOnInit() {
     this.rankColor = this.getRankColor();
+    this.info = this.match.getServerMatchInfo(this.getServerColor());
   }
 
   getRankColor() {
@@ -24,6 +29,18 @@ export class MatchupCardRowComponent implements OnInit {
       return 'info';
     } else if (this.rank === 3) {
       return 'danger lowscore';
+    } else {
+      throw new Error('Invalid rank provided to matchup-card-row.');
+    }
+  }
+
+  getServerColor() {
+    if (this.rank === 1) {
+      return 'green';
+    } else if (this.rank === 2) {
+      return 'blue';
+    } else if (this.rank === 3) {
+      return 'red';
     } else {
       throw new Error('Invalid rank provided to matchup-card-row.');
     }

@@ -1,9 +1,9 @@
 <div class="mc-row">
-  <div>Blackgate</div>
+  <div>{{ info.world }}</div>
   <div>
-    <nb-progress-bar [value]="12" [status]="rankColor">3488</nb-progress-bar>
+    <nb-progress-bar [value]="50" [status]="rankColor">{{ info.skirmish_score }}</nb-progress-bar>
   </div>
-  <div>304</div>
+  <div>{{ info.victory_points }}</div>
   <div>+231</div>
   <div>12</div>
   <div>9</div>
