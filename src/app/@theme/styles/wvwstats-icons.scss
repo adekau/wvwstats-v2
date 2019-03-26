@@ -1,5 +1,5 @@
 @mixin wvwstats-icons() {
-  [class^="wvwstats-icon-"], [class*=" wvwstats-icon-"] {
+  [class^='wvwstats-icon-'], [class*=' wvwstats-icon-'] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'gwtwo' !important;
     speak: none;
@@ -14,10 +14,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  .wvwstats-icon-eu:before {
-    content: "EU";
+  .wvwstats-icon-eu::before {
+    content: 'EU';
   }
-  .wvwstats-icon-na:before {
-    content: "NA";
+  .wvwstats-icon-na::before {
+    content: 'NA';
   }
 }
