@@ -3,7 +3,7 @@ import { MatchService } from '../../@core/services/match.service';
 import { Observable, Subscription } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
-import { MatchCollection } from '../../@core/models/matchcollection.model';
+import { MatchCollection } from '../../@core/collections/match.collection';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class DashboardComponent implements OnDestroy, OnInit {
   private matches$: Observable<MatchCollection>;
   subscription: Subscription;
-  matches: MatchCollection = new MatchCollection();
+  matches: MatchCollection;
 
   constructor(
     protected matchService: MatchService,
