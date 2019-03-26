@@ -1,5 +1,5 @@
 import { MatchScores } from './matchscores.model';
-import { MapBonus } from './MapBonus.model';
+import { MapBonus } from './mapbonus.model';
 import { Objective } from './objective.model';
 import { MatchDeaths } from './matchdeaths.model';
 import { MatchKills } from './matchkills.model';

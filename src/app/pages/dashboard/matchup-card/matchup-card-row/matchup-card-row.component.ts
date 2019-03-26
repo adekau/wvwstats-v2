@@ -23,7 +23,7 @@ export class MatchupCardRowComponent implements OnInit {
     } else if (this.rank === 2) {
       return 'info';
     } else if (this.rank === 3) {
-      return 'danger';
+      return 'danger lowscore';
     } else {
       throw new Error('Invalid rank provided to matchup-card-row.');
     }

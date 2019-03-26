@@ -1,0 +1,23 @@
+@mixin wvwstats-icons() {
+  [class^="wvwstats-icon-"], [class*=" wvwstats-icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'gwtwo' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    font-size: 2.1rem !important;
+    /* smoother rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .wvwstats-icon-eu:before {
+    content: "EU";
+  }
+  .wvwstats-icon-na:before {
+    content: "NA";
+  }
+}

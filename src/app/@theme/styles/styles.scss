@@ -13,6 +13,18 @@
 // loading progress bar theme
 @import './pace.theme';
 
+// custom wvwstats icons
+@import './wvwstats-icons.scss';
+
+// Gw2 font
+@font-face {
+  font-family: 'gwtwo';
+  src: url('./GWTwoFont.woff2') format('woff2'),
+    url('./GWTwoFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 // install the framework and custom global styles
 @include nb-install() {
 
@@ -23,4 +35,7 @@
 
   // loading progress bar
   @include ngx-pace-theme();
+
+  // custom wvwstats fonts
+  @include wvwstats-icons();
 };
