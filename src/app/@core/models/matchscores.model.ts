@@ -3,3 +3,9 @@ export interface MatchScores {
     blue: number;
     green: number;
 }
+
+export interface IMatchScoresPercentage {
+    red: number;
+    blue: number;
+    green: number;
+}
