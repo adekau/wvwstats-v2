@@ -1,4 +1,4 @@
-import { IMatchScoresPercentage } from "./matchscores.model";
+import { IMatchScoresPercentage } from './matchscores.model';
 
 export interface IServerMatchInfo {
   world: number;

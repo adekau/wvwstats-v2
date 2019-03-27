@@ -55,7 +55,7 @@ export class Map implements IMap {
   }
 
   get objectiveCount(): IObjectiveCount {
-    let oc: IObjectiveCount = {
+    const oc: IObjectiveCount = {
       camps: { red: 0, blue: 0, green: 0 },
       towers: { red: 0, blue: 0, green: 0 },
       keeps: { red: 0, blue: 0, green: 0 },

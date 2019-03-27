@@ -78,7 +78,7 @@ export class Match implements IMatch {
       red: (this.lastSkirmish.scores.red / max) * 100,
       blue: (this.lastSkirmish.scores.blue / max) * 100,
       green: (this.lastSkirmish.scores.green / max) * 100,
-    }
+    };
   }
 
   get start() {
@@ -106,7 +106,7 @@ export class Match implements IMatch {
   }
 
   get objectiveCount(): IObjectiveCount {
-    let oc: IObjectiveCount = {
+    const oc: IObjectiveCount = {
       camps: { red: 0, blue: 0, green: 0 },
       towers: { red: 0, blue: 0, green: 0 },
       keeps: { red: 0, blue: 0, green: 0 },
