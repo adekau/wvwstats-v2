@@ -12,6 +12,7 @@ import {
 
 import { ServicesModule } from './services/services.module';
 import { WorldService } from './services/world.service';
+import { ObjectiveService } from './services/objective.service';
 
 const DATA_SERVICES = [
   // example { provide: UserData, useClass: UserService },
@@ -49,6 +50,7 @@ export const NB_CORE_PROVIDERS = [
   LayoutService,
   StateService,
   WorldService,
+  ObjectiveService,
 ];
 
 @NgModule({

@@ -11,6 +11,7 @@ import { MatchScores, IMatchScoresPercentage } from './matchscores.model';
 import { WorldCollection } from '../collections/world.collection';
 import { IMatchPPT } from './matchppt.model';
 import { IObjectiveCount } from './objective.model';
+import { ObjectiveCollection } from '../collections/objective.collection';
 
 export interface IMatch {
   id: string;
@@ -44,8 +45,13 @@ export class Match implements IMatch {
   skirmishes: Skirmish[];
   maps: Map[];
   private gw2worlds: WorldCollection;
+  private gw2objectives: ObjectiveCollection;
 
-  constructor(match: IMatch, gw2worlds: WorldCollection) {
+  constructor(
+    match: IMatch,
+    gw2worlds: WorldCollection,
+    gw2objectives: ObjectiveCollection,
+  ) {
     this.id = match.id;
     this.start_time = match.start_time;
     this.end_time = match.end_time;
@@ -58,6 +64,7 @@ export class Match implements IMatch {
     this.victory_points = match.victory_points;
     this.skirmishes = match.skirmishes;
     this.gw2worlds = gw2worlds;
+    this.gw2objectives = gw2objectives;
   }
 
   get matchWorlds() {

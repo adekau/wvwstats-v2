@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from './api.config';
 import { IMatch, MatchData } from '../models/match.model';
-import { Observable, timer } from 'rxjs';
+import { Observable, timer, merge } from 'rxjs';
 import { shareReplay, switchMap, map, concatMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatchCollection } from '../collections/match.collection';
 import { WorldService } from './world.service';
+import { ObjectiveService } from './objective.service';
 
 const BUFFER_SIZE: number = 1;
 
@@ -15,7 +16,11 @@ const BUFFER_SIZE: number = 1;
 export class MatchService extends MatchData {
   private matches$: Observable<MatchCollection>;
 
-  constructor(private http: HttpClient, public worlds: WorldService) {
+  constructor(
+    private http: HttpClient,
+    public worlds: WorldService,
+    public objectives: ObjectiveService,
+  ) {
     super();
   }
 
@@ -36,9 +41,13 @@ export class MatchService extends MatchData {
       .requestWorlds()
       .pipe(
         concatMap(worlds =>
-          this.http
-            .get<IMatch[]>(API_ROUTES.allMatches)
-            .pipe(map(res => new MatchCollection(res, worlds))),
+          this.objectives.requestData().pipe(
+            concatMap(objectives =>
+              this.http
+                .get<IMatch[]>(API_ROUTES.allMatches)
+                .pipe(map(res => new MatchCollection(res, worlds, objectives)))
+            )
+          )
         ),
       );
   }
