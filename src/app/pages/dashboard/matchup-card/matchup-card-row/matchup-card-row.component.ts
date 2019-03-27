@@ -20,7 +20,6 @@ export class MatchupCardRowComponent implements OnInit {
     this.rankColor = this.getRankColor();
     if (this.match) {
       this.info = this.match.getServerMatchInfo(this.getServerColor());
-      console.log(this.info);
     }
   }
 
