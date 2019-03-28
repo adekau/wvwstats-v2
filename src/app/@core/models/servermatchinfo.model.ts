@@ -1,4 +1,5 @@
 import { IMatchScoresPercentage } from './matchscores.model';
+import { IWorldObjectiveCount } from './objective.model';
 
 export interface IServerMatchInfo {
   world: number;
@@ -10,4 +11,5 @@ export interface IServerMatchInfo {
   skirmish_score: number;
   scorePercent: IMatchScoresPercentage;
   ppt: number;
+  objectiveCount: IWorldObjectiveCount;
 }

@@ -30,10 +30,17 @@ interface ISingleObjectiveCount {
 }
 
 export interface IObjectiveCount {
-  camps: ISingleObjectiveCount;
-  towers: ISingleObjectiveCount;
-  keeps: ISingleObjectiveCount;
-  castles: ISingleObjectiveCount;
+  camp: ISingleObjectiveCount;
+  tower: ISingleObjectiveCount;
+  keep: ISingleObjectiveCount;
+  castle: ISingleObjectiveCount;
+}
+
+export interface IWorldObjectiveCount {
+  camp: number;
+  tower: number;
+  keep: number;
+  castle: number;
 }
 
 export abstract class ObjectiveData {
