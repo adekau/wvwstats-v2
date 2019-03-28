@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import { NbThemeService, NbPopoverDirective } from '@nebular/theme';
+import { Component, Input } from '@angular/core';
+import { NbThemeService, NbPopoverDirective, NbToastrService } from '@nebular/theme';
 import { AnalyticsService } from '../../../../@core/utils/analytics.service';
 import { NbJSThemeOptions } from '@nebular/theme/services/js-themes/theme.options';
 
@@ -41,11 +41,15 @@ export class ThemeSwitcherListComponent {
   constructor(
     private themeService: NbThemeService,
     private analyticsService: AnalyticsService,
-  ) {}
+    private toast: NbToastrService,
+  ) { }
 
   onToggleTheme(themeKey: string) {
     this.themeService.changeTheme(themeKey);
     this.analyticsService.trackEvent('switchTheme');
     this.popover.hide();
+
+    window.localStorage.setItem('wvwstats-theme', themeKey);
+    this.toast.success('Theme selection saved.', 'Theme');
   }
 }

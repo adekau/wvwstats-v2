@@ -33,12 +33,9 @@ import {
   NbSpinnerModule,
   NbRadioModule,
   NbSelectModule,
-  NbChatModule,
   NbTooltipModule,
   NbCalendarKitModule,
 } from '@nebular/theme';
-
-import { NbSecurityModule } from '@nebular/security';
 
 import {
   FooterComponent,
@@ -86,7 +83,6 @@ const NB_MODULES = [
   NbPopoverModule,
   NbContextMenuModule,
   NgbModule,
-  NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
   NbCalendarModule,
   NbCalendarRangeModule,
@@ -103,7 +99,6 @@ const NB_MODULES = [
   NbSpinnerModule,
   NbRadioModule,
   NbSelectModule,
-  NbChatModule,
   NbTooltipModule,
   NbCalendarKitModule,
 ];
@@ -151,9 +146,6 @@ const NB_THEME_PROVIDERS = [
   ...NbDialogModule.forRoot().providers,
   ...NbWindowModule.forRoot().providers,
   ...NbToastrModule.forRoot().providers,
-  ...NbChatModule.forRoot({
-    messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-  }).providers,
 ];
 
 @NgModule({
