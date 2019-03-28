@@ -60,7 +60,7 @@ export class Match implements IMatch {
     this.all_worlds = match.all_worlds;
     this.kills = match.kills;
     this.deaths = match.deaths;
-    this.maps = match.maps.map((map: IMap) => new Map(map));
+    this.maps = match.maps.map((map: IMap) => new Map(map, gw2objectives));
     this.victory_points = match.victory_points;
     this.skirmishes = match.skirmishes;
     this.gw2worlds = gw2worlds;
@@ -114,14 +114,28 @@ export class Match implements IMatch {
 
   get objectiveCount(): IObjectiveCount {
     const oc: IObjectiveCount = {
-      camps: { red: 0, blue: 0, green: 0 },
-      towers: { red: 0, blue: 0, green: 0 },
-      keeps: { red: 0, blue: 0, green: 0 },
-      castles: { red: 0, blue: 0, green: 0 },
+      camp: { red: 0, blue: 0, green: 0 },
+      tower: { red: 0, blue: 0, green: 0 },
+      keep: { red: 0, blue: 0, green: 0 },
+      castle: { red: 0, blue: 0, green: 0 },
     };
 
     (<Map[]>this.maps).forEach((map: Map) => {
-      oc.camps.red += map.objectiveCount.camps.red;
+      oc.camp.red += map.objectiveCount.camp.red;
+      oc.camp.blue += map.objectiveCount.camp.blue;
+      oc.camp.green += map.objectiveCount.camp.green;
+
+      oc.tower.red += map.objectiveCount.tower.red;
+      oc.tower.blue += map.objectiveCount.tower.blue;
+      oc.tower.green += map.objectiveCount.tower.green;
+
+      oc.keep.red += map.objectiveCount.keep.red;
+      oc.keep.blue += map.objectiveCount.keep.blue;
+      oc.keep.green += map.objectiveCount.keep.green;
+
+      oc.castle.red += map.objectiveCount.castle.red;
+      oc.castle.blue += map.objectiveCount.castle.blue;
+      oc.castle.green += map.objectiveCount.castle.green;
     });
 
     return oc;
@@ -138,6 +152,12 @@ export class Match implements IMatch {
       skirmish_score: this.lastSkirmish.scores[color],
       scorePercent: this.scorePercentages[color],
       ppt: this.ppt[color],
+      objectiveCount: {
+        camp: this.objectiveCount.camp[color],
+        tower: this.objectiveCount.tower[color],
+        keep: this.objectiveCount.keep[color],
+        castle: this.objectiveCount.castle[color],
+      },
     };
   }
 }
