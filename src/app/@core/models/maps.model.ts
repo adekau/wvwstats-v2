@@ -4,6 +4,7 @@ import { IObjective, IObjectiveCount } from './objective.model';
 import { MatchDeaths } from './matchdeaths.model';
 import { MatchKills } from './matchkills.model';
 import { IMatchPPT } from './matchppt.model';
+import { ObjectiveCollection } from '../collections/objective.collection';
 
 export interface IMapScores {
   type: string;
@@ -28,14 +29,16 @@ export class Map implements IMap {
   deaths: MatchDeaths;
   kills: MatchKills;
   bonuses?: MapBonus[];
+  gw2objectives: ObjectiveCollection;
 
-  constructor(map: IMap) {
+  constructor(map: IMap, gw2objectives: ObjectiveCollection) {
     this.id = map.id;
     this.type = map.type;
     this.scores = map.scores;
     this.objectives = map.objectives;
     this.deaths = map.deaths;
     this.kills = map.kills;
+    this.gw2objectives = gw2objectives.filterTypes("Tower", "Camp", "Keep", "Castle");
 
     if (map.bonuses) {
       this.bonuses = map.bonuses;
@@ -56,18 +59,22 @@ export class Map implements IMap {
 
   get objectiveCount(): IObjectiveCount {
     const oc: IObjectiveCount = {
-      camps: { red: 0, blue: 0, green: 0 },
-      towers: { red: 0, blue: 0, green: 0 },
-      keeps: { red: 0, blue: 0, green: 0 },
-      castles: { red: 0, blue: 0, green: 0 },
+      camp: { red: 0, blue: 0, green: 0 },
+      tower: { red: 0, blue: 0, green: 0 },
+      keep: { red: 0, blue: 0, green: 0 },
+      castle: { red: 0, blue: 0, green: 0 },
     };
 
     this.objectives.forEach(objective => {
       if (!objective.owner || !objective.points_tick) {
         return;
       }
+      const o = this.gw2objectives.find(objective.id);
+      if (!o.type) {
+        return;
+      }
 
-      // oc[objective.]
+      oc[o.type.toLowerCase()][objective.owner.toLowerCase()]++;
     });
 
     return oc;
