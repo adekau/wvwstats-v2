@@ -38,7 +38,7 @@ export class Map implements IMap {
     this.objectives = map.objectives;
     this.deaths = map.deaths;
     this.kills = map.kills;
-    this.gw2objectives = gw2objectives.filterTypes("Tower", "Camp", "Keep", "Castle");
+    this.gw2objectives = gw2objectives.filterTypes('Tower', 'Camp', 'Keep', 'Castle');
 
     if (map.bonuses) {
       this.bonuses = map.bonuses;

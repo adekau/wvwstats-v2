@@ -44,8 +44,8 @@ export class MatchService extends MatchData {
       concatMap(([worlds, objectives]) =>
         this.http
           .get<IMatch[]>(API_ROUTES.allMatches)
-          .pipe(map(res => new MatchCollection(res, worlds, objectives)))
-      )
+          .pipe(map(res => new MatchCollection(res, worlds, objectives))),
+      ),
     );
   }
 }

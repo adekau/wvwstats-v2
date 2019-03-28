@@ -19,7 +19,7 @@ export class ObjectiveCollection {
     return new ObjectiveCollection(
       this.objectives
         .filter(objective => objective.type)
-        .filter(objective => types.includes(objective.type))
+        .filter(objective => types.includes(objective.type)),
     );
   }
 }

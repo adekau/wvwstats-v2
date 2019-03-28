@@ -3,18 +3,17 @@
  * Copyright Akveo. All Rights Reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { ConnectionService } from './@core/services/connection.service';
 import { Subscription } from 'rxjs';
 import { NbToastrService, NbThemeService } from '@nebular/theme';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-app',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   onlineSubscription: Subscription;
   offlineSubscription: Subscription;

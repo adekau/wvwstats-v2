@@ -63,6 +63,11 @@ export class MatchupCardRowComponent implements OnInit {
   }
 
   get winning() {
-    return this.info.victory_points === Math.max(this.match.victory_points.red, this.match.victory_points.blue, this.match.victory_points.green);
+    return this.info.victory_points
+      === Math.max(
+        this.match.victory_points.red,
+        this.match.victory_points.blue,
+        this.match.victory_points.green,
+      );
   }
 }

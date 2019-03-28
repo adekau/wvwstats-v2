@@ -24,7 +24,7 @@ export class ObjectiveService extends ObjectiveData {
     if (!this.objectives$) {
       this.objectives$ = this.requestData().pipe(
         shareReplay(BUFFER_SIZE),
-      )
+      );
     }
 
     return this.objectives$;
