@@ -63,8 +63,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
        Will try updating again in 15 seconds.`,
       `Network Error (Error code: ${status})`,
       {
-        duration: 7500
-      }
+        duration: 7500,
+      },
     );
   }
 }

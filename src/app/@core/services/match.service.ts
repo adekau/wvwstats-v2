@@ -61,7 +61,7 @@ export class MatchService extends MatchData {
           return err.pipe(
             tap(error => this.onRetry$.next(error.status)),
             delay(15000),
-          )
+          );
         }),
         map(res => new MatchCollection(res, worlds, objectives)),
       );
