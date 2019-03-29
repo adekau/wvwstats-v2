@@ -28,6 +28,10 @@
     display: block;
   }
 
+  .header-container.rtl {
+    align-items: flex-end;
+  }
+
   .header-container {
     display: flex;
     align-items: center;
