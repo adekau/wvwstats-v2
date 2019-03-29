@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from './api.config';
 import { IMatch, MatchData } from '../models/match.model';
-import { Observable, timer, forkJoin } from 'rxjs';
-import { shareReplay, switchMap, map, concatMap } from 'rxjs/operators';
+import { Observable, timer, forkJoin, Subject } from 'rxjs';
+import { shareReplay, switchMap, map, retryWhen, delay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { MatchCollection } from '../collections/match.collection';
 import { WorldService } from './world.service';
 import { ObjectiveService } from './objective.service';
+import { ObjectiveCollection } from '../collections/objective.collection';
+import { WorldCollection } from '../collections/world.collection';
 
 const BUFFER_SIZE: number = 1;
 
@@ -15,6 +17,7 @@ const BUFFER_SIZE: number = 1;
 })
 export class MatchService extends MatchData {
   private matches$: Observable<MatchCollection>;
+  private onRetry$: Subject<number>;
 
   constructor(
     private http: HttpClient,
@@ -22,6 +25,11 @@ export class MatchService extends MatchData {
     public objectives: ObjectiveService,
   ) {
     super();
+    this.onRetry$ = new Subject();
+  }
+
+  get onRetry() {
+    return this.onRetry$;
   }
 
   get matches(): Observable<MatchCollection> {
@@ -41,11 +49,21 @@ export class MatchService extends MatchData {
       this.worlds.requestWorlds(),
       this.objectives.requestData(),
     ).pipe(
-      concatMap(([worlds, objectives]) =>
-        this.http
-          .get<IMatch[]>(API_ROUTES.allMatches)
-          .pipe(map(res => new MatchCollection(res, worlds, objectives))),
-      ),
+      switchMap(([worlds, objectives]) => this.rawMatches(worlds, objectives)),
     );
+  }
+
+  rawMatches(worlds: WorldCollection, objectives: ObjectiveCollection): Observable<any> {
+    return this.http
+      .get<IMatch[]>(API_ROUTES.allMatches)
+      .pipe(
+        retryWhen(err => {
+          return err.pipe(
+            tap(error => this.onRetry$.next(error.status)),
+            delay(15000),
+          )
+        }),
+        map(res => new MatchCollection(res, worlds, objectives)),
+      );
   }
 }
