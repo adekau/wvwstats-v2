@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { NgxEchartsModule } from 'ngx-echarts';
+// import { NgxEchartsModule } from 'ngx-echarts';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
@@ -12,7 +12,6 @@ import { MatchupHeaderCardComponent } from './matchup-header-card/matchup-header
 @NgModule({
   imports: [
     ThemeModule,
-    NgxEchartsModule,
   ],
   declarations: [
     DashboardComponent,

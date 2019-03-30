@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { MatchOverviewComponent } from './match-overview/match-overview.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,6 +15,9 @@ const routes: Routes = [{
   }, {
     path: 'eu',
     component: DashboardComponent,
+  }, {
+    path: 'match/:region/:tier',
+    component: MatchOverviewComponent,
   }, {
     path: '',
     redirectTo: 'na',

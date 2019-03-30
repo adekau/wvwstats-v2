@@ -4,7 +4,7 @@
     <nb-progress-bar [value]="info.scorePercent" [status]="rankColor">{{ info.skirmish_score }}</nb-progress-bar>
   </div>
   <div>
-    <em *ngIf="winning;else not_winning"><strong>{{ info.victory_points }}</strong></em>
+    <strong *ngIf="winning;else not_winning">{{ info.victory_points }}</strong>
     <ng-template #not_winning>{{ info.victory_points }}</ng-template>
   </div>
   <div>+{{ info.ppt }}</div>

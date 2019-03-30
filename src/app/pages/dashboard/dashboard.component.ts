@@ -39,7 +39,8 @@ export class DashboardComponent implements OnDestroy, OnInit {
 
     // subscribe to onRetry event of the match service
     // to show a message that a request will be retried.
-    this.matchService.onRetry.subscribe(status => this.showErrorToast.apply(this, [status]));
+    this.onRetrySubscription = this.matchService.onRetry
+      .subscribe(status => this.showErrorToast.apply(this, [status]));
   }
 
   ngOnDestroy() {
