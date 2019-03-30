@@ -8,7 +8,7 @@ describe('MatchOverviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatchOverviewComponent ]
+      declarations: [ MatchOverviewComponent ],
     })
     .compileComponents();
   }));

@@ -8,6 +8,6 @@ import { ThemeModule } from '../../@theme/theme.module';
   imports: [
     ThemeModule,
     CommonModule,
-  ]
+  ],
 })
 export class MatchOverviewModule { }

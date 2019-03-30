@@ -26,7 +26,7 @@ export class MatchOverviewComponent implements OnInit {
         this.params = params;
         return this.matchService.matches;
       }),
-      map(matches => matches.find(this.selectedRegion, parseInt(this.params.get('tier')))),
+      map(matches => matches.find(this.selectedRegion, parseInt(this.params.get('tier'), 10))),
     );
   }
 
