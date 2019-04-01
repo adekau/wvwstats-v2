@@ -1,9 +1,8 @@
 <div class="row" class="wvwstats-ct">
   <div class="col-xxxl-6 col-xxl-12">
-    <nb-card>
-      <nb-card-body>
-        <ngx-matchup-card [match]="match$ | async"></ngx-matchup-card>
-      </nb-card-body>
-    </nb-card>
+    <ngx-matchup-header-card></ngx-matchup-header-card>
+    <div *ngIf="match$ | async as match">
+      <ngx-matchup-card [match]="match"></ngx-matchup-card>
+    </div>
   </div>
 </div>

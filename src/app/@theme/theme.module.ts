@@ -46,6 +46,9 @@ import {
   TinyMCEComponent,
   ThemeSwitcherListComponent,
   ToggleSettingsButtonComponent,
+  MatchupCardComponent,
+  MatchupCardRowComponent,
+  MatchupHeaderCardComponent,
 } from './components';
 import {
   CapitalizePipe,
@@ -64,8 +67,9 @@ import {
 import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
+import { RouterModule } from '@angular/router';
 
-const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule];
+const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
 
 const NB_MODULES = [
   NbCardModule,
@@ -114,6 +118,9 @@ const COMPONENTS = [
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
   ToggleSettingsButtonComponent,
+  MatchupCardComponent,
+  MatchupCardRowComponent,
+  MatchupHeaderCardComponent,
 ];
 
 const ENTRY_COMPONENTS = [

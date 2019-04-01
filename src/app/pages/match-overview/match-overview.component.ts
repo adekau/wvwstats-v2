@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { switchMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'ngx-match-overview',
@@ -13,7 +13,6 @@ import { Observable } from 'rxjs';
 })
 export class MatchOverviewComponent implements OnInit {
   match$: Observable<Match>;
-  params: ParamMap;
 
   constructor(
     public route: ActivatedRoute,
@@ -21,18 +20,18 @@ export class MatchOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.match$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        this.params = params;
-        return this.matchService.matches;
-      }),
-      map(matches => matches.find(this.selectedRegion, parseInt(this.params.get('tier'), 10))),
+    this.match$ = combineLatest(
+      this.matchService.matches,
+      this.route.paramMap,
+    ).pipe(
+      map(([matches, params]) =>
+        matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
     );
   }
 
-  get selectedRegion(): GW2Region {
-    if (this.params && this.params.has('region')) {
-      const region = this.params.get('region');
+  selectedRegion(params: ParamMap): GW2Region {
+    if (params && params.has('region')) {
+      const region = params.get('region');
       if (region.toLowerCase() === 'na') {
         return GW2Region.NA;
       } else if (region.toLowerCase() === 'eu') {

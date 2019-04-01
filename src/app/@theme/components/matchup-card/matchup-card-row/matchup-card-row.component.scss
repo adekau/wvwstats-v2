@@ -1,16 +1,20 @@
 @import '../../../../@theme/styles/themes';
 
-.mc-row {
-  display: grid;
-  grid-template-columns: 17fr 18fr 10fr 10fr 6fr 6fr 6fr 6fr 10fr 10fr;
-  grid-column-gap: 5px;
-  margin-bottom: 8px;
-}
-  
 @include nb-install-component() {
+  .mc-row {
+    display: grid;
+    grid-template-columns: 17fr 18fr 10fr 10fr 6fr 6fr 6fr 6fr 10fr 10fr;
+    grid-column-gap: 5px;
+    margin-bottom: 8px;
+  }
+
   .progress-value.danger.lowscore {
     // color: nb-theme(fg-color) !important;
     color: black !important;
     overflow: unset !important;
+  }
+
+  a {
+    color: inherit;
   }
 }

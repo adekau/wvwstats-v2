@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Match } from '../../../../@core/models/match.model';
 import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 import { WorldCollection } from '../../../../@core/collections/world.collection';
@@ -8,20 +8,32 @@ import { WorldCollection } from '../../../../@core/collections/world.collection'
   templateUrl: './matchup-card-row.component.html',
   styleUrls: ['./matchup-card-row.component.scss'],
 })
-export class MatchupCardRowComponent implements OnInit {
+export class MatchupCardRowComponent implements OnInit, OnChanges {
   @Input() rank: number;
   @Input() match: Match;
 
+  serverColor: string;
   rankColor: string = '';
   info: IServerMatchInfo;
+  region: string;
+  tier: number;
+  serverTooltip: string;
+  winning: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.serverColor = this.getServerColor();
+    this.info = this.match.getServerMatchInfo(this.serverColor);
     this.rankColor = this.getRankColor();
-    if (this.match) {
-      this.info = this.match.getServerMatchInfo(this.getServerColor());
-    }
+    this.tier = parseInt(this.match.id.split('-')[1], 10);
+    this.region = parseInt(this.match.id.split('-')[0], 10) === 1 ? 'na' : 'eu';
+    this.serverTooltip = this.getServerTooltip();
+  }
+
+  ngOnChanges() {
+    this.info = this.match.getServerMatchInfo(this.serverColor);
+    this.winning = this.getWinning();
   }
 
   getRankColor() {
@@ -48,7 +60,7 @@ export class MatchupCardRowComponent implements OnInit {
     }
   }
 
-  get serverTooltip() {
+  getServerTooltip() {
     if (this.info) {
       // this is very bad looking, should probably make a class
       // for IServerMatchInfo to clean this up.
@@ -62,7 +74,7 @@ export class MatchupCardRowComponent implements OnInit {
     }
   }
 
-  get winning() {
+  getWinning() {
     return this.info.victory_points
       === Math.max(
         this.match.victory_points.red,

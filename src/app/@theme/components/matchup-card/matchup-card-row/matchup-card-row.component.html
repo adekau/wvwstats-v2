@@ -1,5 +1,9 @@
 <div class="mc-row">
-  <div><span [nbTooltip]="serverTooltip">{{ info.world.name }}</span></div>
+  <div>
+    <span [nbTooltip]="serverTooltip">
+      <a [routerLink]="['/match', region, tier]">{{ info.world.name }}</a>
+    </span>
+  </div>
   <div>
     <nb-progress-bar [value]="info.scorePercent" [status]="rankColor">{{ info.skirmish_score }}</nb-progress-bar>
   </div>

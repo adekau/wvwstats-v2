@@ -1,15 +1,15 @@
-import { IMatchScoresPercentage } from './matchscores.model';
 import { IWorldObjectiveCount } from './objective.model';
+import { WorldCollection } from '../collections/world.collection';
 
 export interface IServerMatchInfo {
   world: number;
-  all_worlds: Array<number>;
+  all_worlds: WorldCollection;
   kills: number;
   deaths: number;
   victory_points: number;
   score: number;
   skirmish_score: number;
-  scorePercent: IMatchScoresPercentage;
+  scorePercent: number;
   ppt: number;
   objectiveCount: IWorldObjectiveCount;
 }

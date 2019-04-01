@@ -4,9 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
-import { MatchupCardComponent } from './matchup-card/matchup-card.component';
-import { MatchupCardRowComponent } from './matchup-card/matchup-card-row/matchup-card-row.component';
-import { MatchupHeaderCardComponent } from './matchup-header-card/matchup-header-card.component';
 
 
 @NgModule({
@@ -15,9 +12,6 @@ import { MatchupHeaderCardComponent } from './matchup-header-card/matchup-header
   ],
   declarations: [
     DashboardComponent,
-    MatchupCardComponent,
-    MatchupCardRowComponent,
-    MatchupHeaderCardComponent,
   ],
 })
 export class DashboardModule { }
