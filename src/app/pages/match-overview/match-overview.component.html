@@ -1,8 +1,41 @@
 <div class="row" class="wvwstats-ct">
   <div class="col-xxxl-6 col-xxl-12">
+    <!-- Card for match header and details -->
     <ngx-matchup-header-card></ngx-matchup-header-card>
     <div *ngIf="match$ | async as match">
       <ngx-matchup-card [match]="match"></ngx-matchup-card>
     </div>
+
+    <!-- Action bar (map/grapher/etc) -->
+    <nb-card>
+      <nb-card-body>
+        <nb-actions size="medium" fullWidth>
+          <nb-action nbTooltip="Map" icon="nb-location"></nb-action>
+          <nb-action nbTooltip="Graphs" icon="nb-bar-chart"></nb-action>
+          <nb-action nbTooltip="Timezone Data" icon="nb-sunny-circled" [nbContextMenu]="timezoneMenu"></nb-action>
+        </nb-actions>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Time Range Selection -->
+    <nb-card accent="info">
+      <nb-card-header>
+        Custom Time Period
+      </nb-card-header>
+      <nb-card-body>
+        <input nbInput placeholder="Select Date Range" [nbDatepicker]="range">
+        <nb-rangepicker #range></nb-rangepicker>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Borderland Data -->
+    <nb-card>
+      <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="data">
+
+        </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+
   </div>
 </div>
