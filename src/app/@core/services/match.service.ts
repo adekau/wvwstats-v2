@@ -46,8 +46,8 @@ export class MatchService extends MatchData {
 
   requestMatches(): Observable<MatchCollection> {
     return forkJoin(
-      this.worlds.requestWorlds(),
-      this.objectives.requestData(),
+      this.worlds.worlds,
+      this.objectives.objectives,
     ).pipe(
       switchMap(([worlds, objectives]) => this.rawMatches(worlds, objectives)),
     );
