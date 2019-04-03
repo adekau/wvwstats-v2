@@ -5,7 +5,7 @@
     </span>
   </div>
   <div>
-    <nb-progress-bar [value]="info.scorePercent" [status]="rankColor">{{ info.skirmish_score }}</nb-progress-bar>
+    <nb-progress-bar [nbTooltip]="'Skirmish Score: ' + info.skirmish_score" [value]="info.scorePercent" [status]="rankColor">{{ info.skirmish_score }}</nb-progress-bar>
   </div>
   <div>
     <strong *ngIf="winning;else not_winning">{{ info.victory_points }}</strong>
@@ -17,5 +17,5 @@
   <div>{{ info.objectiveCount.keep }}</div>
   <div>{{ info.objectiveCount.castle }}</div>
   <div>1909.124</div>
-  <div>3.713</div>
+  <div>{{ info.kd }}</div>
 </div>
