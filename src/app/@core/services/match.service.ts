@@ -60,6 +60,8 @@ export class MatchService extends MatchData {
         retryWhen(err => {
           return err.pipe(
             tap(error => this.onRetry$.next(error.status)),
+            // basically just delay it until the timer goes off again.
+            // This observable will be unsubscribed from by switchMap above.
             delay(15000),
           );
         }),
