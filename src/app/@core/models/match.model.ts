@@ -158,6 +158,7 @@ export class Match implements IMatch {
         keep: this.objectiveCount.keep[color],
         castle: this.objectiveCount.castle[color],
       },
+      kd: parseFloat((this.kills[color] / this.deaths[color]).toFixed(2)),
     };
   }
 }
