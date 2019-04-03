@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { map, takeWhile, delay } from 'rxjs/operators';
+import { map, takeWhile, delay, tap } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { Observable, combineLatest } from 'rxjs';
@@ -18,24 +18,7 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
   private alive = true;
   option: any;
 
-  data = [
-    {
-      server: 'Blackgate',
-      kills: 34000,
-      deaths: 17000,
-      activity: 51000,
-    }, {
-      server: 'Anvil Rock',
-      kills: 13000,
-      deaths: 23000,
-      activity: 36000,
-    }, {
-      server: 'Sea of Sorrows',
-      kills: 15000,
-      deaths: 34000,
-      activity: 49000,
-    },
-  ];
+  data;
 
   settings = {
     actions: {
@@ -51,23 +34,26 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
     columns: {
       server: {
         title: 'Server',
-        type: 'string',
-        editable: false,
       },
-      kills: {
-        title: 'Kills',
-        type: 'number',
-        editable: false,
+      kd: {
+        title: 'Total',
+        filter: false,
       },
-      deaths: {
-        title: 'Deaths',
-        type: 'number',
-        editable: false,
+      ebg: {
+        title: 'EBG',
+        filter: false,
       },
-      activity: {
-        title: 'Activity',
-        type: 'number',
-        editable: false,
+      red: {
+        title: 'Red BL',
+        filter: false,
+      },
+      blue: {
+        title: 'Blue BL',
+        filter: false,
+      },
+      green: {
+        title: 'Green BL',
+        filter: false,
       },
     },
   };
@@ -80,12 +66,14 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.data = [];
     this.match$ = combineLatest(
       this.matchService.matches,
       this.route.paramMap,
     ).pipe(
       map(([matches, params]) =>
         matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
+      tap(this.generateKdData),
     );
   }
 
@@ -203,6 +191,20 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
 
   onChartInit(echarts) {
     this.echartsInstance = echarts;
+  }
+  
+  generateKdData(match: Match) {
+    console.log(this.data);
+    this.data = [
+      {
+        server: match.matchWorlds.green.name,
+        kd: match.kills.green / match.deaths.green,
+        ebg: 0,
+        red: 0,
+        blue: 0,
+        green: 0,
+      },
+    ];
   }
 
 }
