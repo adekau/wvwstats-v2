@@ -192,7 +192,7 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
   onChartInit(echarts) {
     this.echartsInstance = echarts;
   }
-  
+
   generateKdData(match: Match) {
     console.log(this.data);
     this.data = [
