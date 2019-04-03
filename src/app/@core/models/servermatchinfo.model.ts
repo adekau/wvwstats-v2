@@ -12,4 +12,5 @@ export interface IServerMatchInfo {
   scorePercent: number;
   ppt: number;
   objectiveCount: IWorldObjectiveCount;
+  kd: number;
 }
