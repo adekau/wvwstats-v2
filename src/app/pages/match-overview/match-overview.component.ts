@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { map } from 'rxjs/operators';
+import { map, takeWhile, delay } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { Observable, combineLatest } from 'rxjs';
-import { LocalDataSource } from 'ng2-smart-table';
+import { NbThemeService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-match-overview',
@@ -14,11 +14,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 })
 export class MatchOverviewComponent implements OnInit {
   match$: Observable<Match>;
-  timezoneMenu = [
-    { title: 'Red' },
-    { title: 'Blue' },
-    { title: 'Green' },
-  ];
+  echartsInstance: any;
+  private alive = true;
+  option: any;
 
   data = [
     {
@@ -77,6 +75,7 @@ export class MatchOverviewComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     public matchService: MatchService,
+    private theme: NbThemeService,
   ) {
   }
 
@@ -89,6 +88,103 @@ export class MatchOverviewComponent implements OnInit {
         matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
     );
   }
+
+  ngAfterViewInit(): void {
+    this.theme.getJsTheme()
+      .pipe(
+        takeWhile(() => this.alive),
+        delay(1),
+      )
+      .subscribe(config => {
+        const eTheme: any = config.variables.orders;
+
+        this.setOptions(eTheme);
+      });
+  }
+
+  setOptions(eTheme) {
+    this.option = {
+      grid: {
+        left: 40,
+        top: 20,
+        right: 0,
+        bottom: 40,
+      },
+      tooltip: {
+        trigger: 'item',
+        axisPointer: {
+          type: 'line',
+          lineStyle: {
+            color: eTheme.tooltipLineColor,
+            width: eTheme.tooltipLineWidth,
+          },
+        },
+        textStyle: {
+          color: eTheme.tooltipTextColor,
+          fontSize: eTheme.tooltipFontSize,
+          fontWeight: eTheme.tooltipFontWeight,
+        },
+        position: 'top',
+        backgroundColor: eTheme.tooltipBg,
+        borderColor: eTheme.tooltipBorderColor,
+        borderWidth: 3,
+        formatter: (params) => {
+          return Math.round(parseInt(params.value, 10));
+        },
+        extraCssText: eTheme.tooltipExtraCss,
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        offset: 5,
+        data: [],
+        axisTick: {
+          show: false,
+        },
+        axisLabel: {
+          color: eTheme.axisTextColor,
+          fontSize: eTheme.axisFontSize,
+        },
+        axisLine: {
+          lineStyle: {
+            color: eTheme.axisLineColor,
+            width: '2',
+          },
+        },
+      },
+      yAxis: {
+        type: 'value',
+        boundaryGap: false,
+        axisLine: {
+          lineStyle: {
+            color: eTheme.axisLineColor,
+            width: '1',
+          },
+        },
+        axisLabel: {
+          color: eTheme.axisTextColor,
+          fontSize: eTheme.axisFontSize,
+        },
+        axisTick: {
+          show: false,
+        },
+        splitLine: {
+
+          lineStyle: {
+            color: eTheme.yAxisSplitLine,
+            width: '1',
+          },
+        },
+      },
+      series: [
+        {
+          data: [100,250,600,710,840],
+          type: 'line',
+        },
+      ],
+    };
+  }
+
 
   selectedRegion(params: ParamMap): GW2Region {
     if (params && params.has('region')) {
@@ -103,6 +199,10 @@ export class MatchOverviewComponent implements OnInit {
     } else {
       throw new Error('No region provided.');
     }
+  }
+
+  onChartInit(echarts) {
+    this.echartsInstance = echarts;
   }
 
 }

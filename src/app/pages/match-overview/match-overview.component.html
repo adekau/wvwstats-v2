@@ -12,7 +12,8 @@
         <nb-actions size="medium" fullWidth>
           <nb-action nbTooltip="Map" icon="nb-location"></nb-action>
           <nb-action nbTooltip="Graphs" icon="nb-bar-chart"></nb-action>
-          <nb-action nbTooltip="Timezone Data" icon="nb-sunny-circled" [nbContextMenu]="timezoneMenu"></nb-action>
+          <nb-action nbTooltip="Timezone Data" icon="nb-sunny-circled">
+          </nb-action>
         </nb-actions>
       </nb-card-body>
     </nb-card>
@@ -34,6 +35,16 @@
         <ng2-smart-table [settings]="settings" [source]="data">
 
         </ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
+
+    <!-- Graphs -->
+    <nb-card accent="info">
+      <nb-card-header>
+        Score Evolution
+      </nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="option" class="echart" (chartInit)="onChartInit($event)"></div>
       </nb-card-body>
     </nb-card>
 
