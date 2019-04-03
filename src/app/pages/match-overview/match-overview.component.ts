@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
 import { map, takeWhile, delay } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { NbThemeService } from '@nebular/theme';
   templateUrl: './match-overview.component.html',
   styleUrls: ['./match-overview.component.scss'],
 })
-export class MatchOverviewComponent implements OnInit {
+export class MatchOverviewComponent implements OnInit, AfterViewInit {
   match$: Observable<Match>;
   echartsInstance: any;
   private alive = true;
@@ -178,7 +178,7 @@ export class MatchOverviewComponent implements OnInit {
       },
       series: [
         {
-          data: [100,250,600,710,840],
+          data: [100, 250, 600, 710, 840],
           type: 'line',
         },
       ],
