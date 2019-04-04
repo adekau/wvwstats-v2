@@ -85,7 +85,7 @@ export class MatchService extends MatchData {
   }
 
   private findMap(maps: Array<Map>, type: GW2MapType) {
-    return maps.find(map => map.type === type);
+    return maps.find(singleMap => singleMap.type === type);
   }
 
   requestMatches(): Observable<MatchCollection> {
