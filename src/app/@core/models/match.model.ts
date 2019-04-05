@@ -7,7 +7,7 @@ import { Skirmish } from './skirmish.model';
 import { IMap, Map } from './maps.model';
 import { MatchCollection } from '../collections/match.collection';
 import { IServerMatchInfo } from './servermatchinfo.model';
-import { MatchScores, IMatchScoresPercentage } from './matchscores.model';
+import { IMatchScores, IMatchScoresPercentage } from './matchscores.model';
 import { WorldCollection } from '../collections/world.collection';
 import { IMatchPPT } from './matchppt.model';
 import { IObjectiveCount } from './objective.model';
@@ -18,7 +18,7 @@ export interface IMatch {
   start_time: string;
   end_time: string;
   worlds: IMatchWorlds;
-  scores: MatchScores;
+  scores: IMatchScores;
   all_worlds: IMatchAllWorlds;
   kills: MatchKills;
   deaths: MatchDeaths;
@@ -37,7 +37,7 @@ export class Match implements IMatch {
   start_time: string;
   end_time: string;
   worlds: IMatchWorlds;
-  scores: MatchScores;
+  scores: IMatchScores;
   all_worlds: IMatchAllWorlds;
   kills: MatchKills;
   deaths: MatchDeaths;

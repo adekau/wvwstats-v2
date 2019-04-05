@@ -1,4 +1,4 @@
-export interface MatchScores {
+export interface IMatchScores {
     red: number;
     blue: number;
     green: number;

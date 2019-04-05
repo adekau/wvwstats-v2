@@ -1,4 +1,4 @@
-import { MatchScores } from './matchscores.model';
+import { IMatchScores } from './matchscores.model';
 import { MapBonus } from './mapbonus.model';
 import { IObjective, IObjectiveCount } from './objective.model';
 import { MatchDeaths } from './matchdeaths.model';
@@ -9,13 +9,13 @@ import { GW2MapType } from '../enums/gw2maptype.enum';
 
 export interface IMapScores {
   type: string;
-  scores: MatchScores;
+  scores: IMatchScores;
 }
 
 export interface IMap {
   id: number;
   type: GW2MapType;
-  scores: MatchScores;
+  scores: IMatchScores;
   objectives: IObjective[];
   deaths: MatchDeaths;
   kills: MatchKills;
@@ -25,7 +25,7 @@ export interface IMap {
 export class Map implements IMap {
   id: number;
   type: GW2MapType;
-  scores: MatchScores;
+  scores: IMatchScores;
   objectives: IObjective[];
   deaths: MatchDeaths;
   kills: MatchKills;
