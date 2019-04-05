@@ -8,6 +8,19 @@
     justify-content: center;
   }
 
+  .custom-range-form {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .custom-range-form.combo {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+
   @include media-breakpoint-down(sm) {
     ngx-traffic {
       display: none;

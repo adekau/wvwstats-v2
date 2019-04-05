@@ -24,7 +24,23 @@
         Custom Time Period
       </nb-card-header>
       <nb-card-body>
-        <input nbInput placeholder="Select Date Range" [nbDatepicker]="range">
+        <div class="custom-range-form">
+          <div class="combo">
+            <span>Date Range:</span>
+            <input nbInput placeholder="Select Date Range" [nbDatepicker]="range">
+          </div>
+
+          <div class="combo">
+            <span>Start Time:</span>
+            <ngb-timepicker [(ngModel)]="timeStart" [minuteStep]="minuteStep" [meridian]="true"></ngb-timepicker>
+          </div>
+
+          <div class="combo">
+            <span>End Time:</span>
+            <ngb-timepicker [(ngModel)]="timeEnd" [minuteStep]="minuteStep" [meridian]="true"></ngb-timepicker>
+          </div>
+          <button nbButton hero status="danger">Clear</button>
+        </div>
         <nb-rangepicker #range></nb-rangepicker>
       </nb-card-body>
     </nb-card>

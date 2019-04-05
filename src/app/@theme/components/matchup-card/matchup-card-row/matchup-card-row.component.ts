@@ -29,6 +29,7 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.tier = parseInt(this.match.id.split('-')[1], 10);
     this.region = parseInt(this.match.id.split('-')[0], 10) === 1 ? 'na' : 'eu';
     this.serverTooltip = this.getServerTooltip();
+    this.winning = this.getWinning();
   }
 
   ngOnChanges() {

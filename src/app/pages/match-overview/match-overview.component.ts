@@ -1,12 +1,15 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { map, takeWhile, delay, tap } from 'rxjs/operators';
+import { map, takeWhile, delay, tap, take } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, ObservableLike } from 'rxjs';
 import { NbThemeService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { MatchArchiveService } from '../../@core/services/match-archive.service';
+import { IMatchArchive } from '../../@core/models/matcharchive.model';
 
 @Component({
   selector: 'ngx-match-overview',
@@ -19,8 +22,13 @@ export class MatchOverviewComponent implements AfterViewInit {
   private alive = true;
   option: any;
 
+  minuteStep = 15;
+  timeStart: NgbTimeStruct;
+  timeEnd: NgbTimeStruct;
+
   source: LocalDataSource = new LocalDataSource();
 
+  // Settings for KDR data table.
   settings = {
     hideSubHeader: true,
     actions: {
@@ -65,6 +73,7 @@ export class MatchOverviewComponent implements AfterViewInit {
   constructor(
     public route: ActivatedRoute,
     public matchService: MatchService,
+    public archive: MatchArchiveService,
     private theme: NbThemeService,
   ) {
     this.match$ = combineLatest(
@@ -77,6 +86,7 @@ export class MatchOverviewComponent implements AfterViewInit {
       }),
       map(([matches, params]) =>
         matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
+      tap((match) => this.getChartData(match)),
     );
   }
 
@@ -196,6 +206,12 @@ export class MatchOverviewComponent implements AfterViewInit {
 
   onChartInit(echarts) {
     this.echartsInstance = echarts;
+  }
+
+  getChartData(match: Match) {
+    this.archive.scores(match).pipe(
+      take(1),
+    ).subscribe((scores: IMatchArchive) => console.log(scores));
   }
 
 }
