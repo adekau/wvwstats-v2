@@ -1,8 +1,9 @@
 import { IWorldObjectiveCount } from './objective.model';
 import { WorldCollection } from '../collections/world.collection';
+import { IWorld } from './world.model';
 
 export interface IServerMatchInfo {
-  world: number;
+  world: IWorld;
   all_worlds: WorldCollection;
   kills: number;
   deaths: number;
