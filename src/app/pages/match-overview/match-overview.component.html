@@ -61,7 +61,8 @@
         Score Evolution
       </nb-card-header>
       <nb-card-body>
-        <div echarts [options]="option" class="echart" (chartInit)="onChartInit($event)"></div>
+        <div echarts [options]="option" [merge]="scoresChartData" class="echart" [loading]="true"
+          (chartInit)="onChartInit($event)"></div>
       </nb-card-body>
     </nb-card>
 

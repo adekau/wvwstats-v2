@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatchArchiveData, IMatchArchive } from '../models/matcharchive.model';
 import { Observable } from 'rxjs';
-import { GW2Region } from '../enums/gw2region.enum';
 import { Match } from '../models/match.model';
 import { HttpClient } from '@angular/common/http';
 import { API_ROUTES } from './api.config';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, map } from 'rxjs/operators';
+import { MatchArchiveScoresCollection } from '../collections/matcharchive/matcharchive-scores.collection';
 
 const BUFFER_SIZE: number = 1;
 
@@ -27,6 +27,7 @@ export class MatchArchiveService extends MatchArchiveData {
 
     if (!this.scores$[key]) {
       this.scores$[key] = this.requestMatchArchive('scores', match).pipe(
+        map((val: IMatchArchive[]) => new MatchArchiveScoresCollection(val)),
         shareReplay(BUFFER_SIZE),
       );
     }

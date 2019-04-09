@@ -1,26 +1,28 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
 import { map, takeWhile, delay, tap, take } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
-import { Observable, combineLatest, ObservableLike } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { NbThemeService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { MatchArchiveService } from '../../@core/services/match-archive.service';
-import { IMatchArchive } from '../../@core/models/matcharchive.model';
+import { MatchArchiveScoresCollection } from '../../@core/collections/matcharchive/matcharchive-scores.collection';
+import { MatchServerRank } from '../../@core/enums/matchserverrank.enum';
 
 @Component({
   selector: 'ngx-match-overview',
   templateUrl: './match-overview.component.html',
   styleUrls: ['./match-overview.component.scss'],
 })
-export class MatchOverviewComponent implements AfterViewInit {
+export class MatchOverviewComponent implements OnInit, AfterViewInit {
   match$: Observable<Match>;
   echartsInstance: any;
   private alive = true;
   option: any;
+  scoresChartData: any;
 
   minuteStep = 15;
   timeStart: NgbTimeStruct;
@@ -44,6 +46,13 @@ export class MatchOverviewComponent implements AfterViewInit {
       },
       kd: {
         title: 'Total',
+        type: 'number',
+        filter: false,
+        sort: true,
+        sortDirection: 'desc',
+      },
+      activity: {
+        title: 'Activity',
         type: 'number',
         filter: false,
       },
@@ -75,7 +84,9 @@ export class MatchOverviewComponent implements AfterViewInit {
     public matchService: MatchService,
     public archive: MatchArchiveService,
     private theme: NbThemeService,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.match$ = combineLatest(
       this.matchService.matches,
       this.route.paramMap,
@@ -91,8 +102,6 @@ export class MatchOverviewComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
-
     this.theme.getJsTheme()
       .pipe(
         takeWhile(() => this.alive),
@@ -142,7 +151,7 @@ export class MatchOverviewComponent implements AfterViewInit {
         offset: 5,
         data: [],
         axisTick: {
-          show: false,
+          show: true,
         },
         axisLabel: {
           color: eTheme.axisTextColor,
@@ -180,10 +189,6 @@ export class MatchOverviewComponent implements AfterViewInit {
         },
       },
       series: [
-        {
-          data: [100, 250, 600, 710, 840],
-          type: 'line',
-        },
       ],
     };
   }
@@ -211,7 +216,27 @@ export class MatchOverviewComponent implements AfterViewInit {
   getChartData(match: Match) {
     this.archive.scores(match).pipe(
       take(1),
-    ).subscribe((scores: IMatchArchive) => console.log(scores));
+    ).subscribe((scores: MatchArchiveScoresCollection) => {
+      const data = [
+        {
+          type: 'line',
+          color: 'green',
+          data: scores.flattenTo(MatchServerRank.FIRST),
+        }, {
+          type: 'line',
+          color: 'blue',
+          data: scores.flattenTo(MatchServerRank.SECOND),
+        }, {
+          type: 'line',
+          color: 'red',
+          data: scores.flattenTo(MatchServerRank.THIRD),
+        },
+      ];
+
+      this.scoresChartData = {
+        series: data,
+      };
+    });
   }
 
 }

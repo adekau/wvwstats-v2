@@ -60,6 +60,7 @@ export class MatchService extends MatchData {
           {
             server: `${match.matchWorlds.green.name} (Green)`,
             kd: (match.kills.green / match.deaths.green).toFixed(2),
+            activity: (match.kills.green + match.deaths.green),
             ebg: (ebg.kills.green / ebg.deaths.green).toFixed(2),
             red: (redbl.kills.green / redbl.deaths.green).toFixed(2),
             blue: (bluebl.kills.green / bluebl.deaths.green).toFixed(2),
@@ -67,6 +68,7 @@ export class MatchService extends MatchData {
           }, {
             server: `${match.matchWorlds.blue.name} (Blue)`,
             kd: (match.kills.blue / match.deaths.blue).toFixed(2),
+            activity: (match.kills.blue + match.deaths.blue),
             ebg: (ebg.kills.blue / ebg.deaths.blue).toFixed(2),
             red: (redbl.kills.blue / redbl.deaths.blue).toFixed(2),
             blue: (bluebl.kills.blue / bluebl.deaths.blue).toFixed(2),
@@ -74,6 +76,7 @@ export class MatchService extends MatchData {
           }, {
             server: `${match.matchWorlds.red.name} (Red)`,
             kd: (match.kills.red / match.deaths.red).toFixed(2),
+            activity: (match.kills.red + match.deaths.red),
             ebg: (ebg.kills.red / ebg.deaths.red).toFixed(2),
             red: (redbl.kills.red / redbl.deaths.red).toFixed(2),
             blue: (bluebl.kills.red / bluebl.deaths.red).toFixed(2),

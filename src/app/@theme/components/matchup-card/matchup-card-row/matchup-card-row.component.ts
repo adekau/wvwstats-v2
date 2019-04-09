@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Match } from '../../../../@core/models/match.model';
 import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 import { WorldCollection } from '../../../../@core/collections/world.collection';
+import { MatchServerRank } from '../../../../@core/enums/matchserverrank.enum';
 
 @Component({
   selector: 'ngx-matchup-card-row',
@@ -12,29 +13,32 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
   @Input() rank: number;
   @Input() match: Match;
 
-  serverColor: string;
-  rankColor: string = '';
+  serverColor: MatchServerRank;
+  rankClass: string = '';
   info: IServerMatchInfo;
   region: string;
   tier: number;
   serverTooltip: string;
   winning: boolean;
+  topKd: boolean;
 
   constructor() { }
 
   ngOnInit() {
     this.serverColor = this.getServerColor();
     this.info = this.match.getServerMatchInfo(this.serverColor);
-    this.rankColor = this.getRankColor();
+    this.rankClass = this.getRankColor();
     this.tier = parseInt(this.match.id.split('-')[1], 10);
     this.region = parseInt(this.match.id.split('-')[0], 10) === 1 ? 'na' : 'eu';
     this.serverTooltip = this.getServerTooltip();
     this.winning = this.getWinning();
+    this.topKd = this.isTopKd();
   }
 
   ngOnChanges() {
     this.info = this.match.getServerMatchInfo(this.serverColor);
     this.winning = this.getWinning();
+    this.topKd = this.isTopKd();
   }
 
   getRankColor() {
@@ -51,11 +55,11 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
 
   getServerColor() {
     if (this.rank === 1) {
-      return 'green';
+      return MatchServerRank.FIRST;
     } else if (this.rank === 2) {
-      return 'blue';
+      return MatchServerRank.SECOND;
     } else if (this.rank === 3) {
-      return 'red';
+      return MatchServerRank.THIRD;
     } else {
       throw new Error('Invalid rank provided to matchup-card-row.');
     }
@@ -82,5 +86,13 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
         this.match.victory_points.blue,
         this.match.victory_points.green,
       );
+  }
+
+  isTopKd() {
+    return this.info.kd === Math.max(
+      parseFloat((this.match.kills.green / this.match.deaths.green).toFixed(2)),
+      parseFloat((this.match.kills.blue / this.match.deaths.blue).toFixed(2)),
+      parseFloat((this.match.kills.red / this.match.deaths.red).toFixed(2)),
+    );
   }
 }
