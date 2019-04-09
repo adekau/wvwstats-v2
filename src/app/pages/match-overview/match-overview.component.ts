@@ -97,7 +97,9 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
       }),
       map(([matches, params]) =>
         matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
-      tap((match) => this.getChartData(match)),
+      tap((match) => {
+        this.getChartData(match);
+      }),
     );
   }
 
@@ -123,70 +125,33 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
         bottom: 40,
       },
       tooltip: {
-        trigger: 'item',
+        trigger: 'axis',
+        // formatter: function (params) {
+        //   params = params[0];
+        //   var date = new Date(params.value[0]);
+        //   return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
+        // },
         axisPointer: {
-          type: 'line',
-          lineStyle: {
-            color: eTheme.tooltipLineColor,
-            width: eTheme.tooltipLineWidth,
-          },
-        },
-        textStyle: {
-          color: eTheme.tooltipTextColor,
-          fontSize: eTheme.tooltipFontSize,
-          fontWeight: eTheme.tooltipFontWeight,
-        },
-        position: 'top',
-        backgroundColor: eTheme.tooltipBg,
-        borderColor: eTheme.tooltipBorderColor,
-        borderWidth: 3,
-        formatter: (params) => {
-          return Math.round(parseInt(params.value, 10));
-        },
-        extraCssText: eTheme.tooltipExtraCss,
+          animation: false
+        }
       },
+      // dataZoom: [{
+      //   startValue: '2019-04-09'
+      // }, {
+      //   type: 'inside'
+      // }],
       xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        offset: 5,
-        data: [],
-        axisTick: {
-          show: true,
-        },
-        axisLabel: {
-          color: eTheme.axisTextColor,
-          fontSize: eTheme.axisFontSize,
-        },
-        axisLine: {
-          lineStyle: {
-            color: eTheme.axisLineColor,
-            width: '2',
-          },
-        },
+        type: 'time',
+        splitLine: {
+          show: false
+        }
       },
       yAxis: {
         type: 'value',
-        boundaryGap: false,
-        axisLine: {
-          lineStyle: {
-            color: eTheme.axisLineColor,
-            width: '1',
-          },
-        },
-        axisLabel: {
-          color: eTheme.axisTextColor,
-          fontSize: eTheme.axisFontSize,
-        },
-        axisTick: {
-          show: false,
-        },
+        boundaryGap: [0, '100%'],
         splitLine: {
-
-          lineStyle: {
-            color: eTheme.yAxisSplitLine,
-            width: '1',
-          },
-        },
+          show: true
+        }
       },
       series: [
       ],
@@ -234,8 +199,17 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
       ];
 
       this.scoresChartData = {
+        xAxis: {
+          type: 'category',
+          splitLine: {
+            show: false
+          },
+          data: scores.snapshotTimes.map(t => t.replace('T', '\n')),
+        },
         series: data,
       };
+
+      console.log(this.scoresChartData.xAxis);
     });
   }
 
