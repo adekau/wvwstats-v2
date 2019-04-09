@@ -12,6 +12,7 @@ import { WorldCollection } from '../collections/world.collection';
 import { IMatchPPT } from './matchppt.model';
 import { IObjectiveCount } from './objective.model';
 import { ObjectiveCollection } from '../collections/objective.collection';
+import { MatchServerRank } from '../enums/matchserverrank.enum';
 
 export interface IMatch {
   id: string;
@@ -141,24 +142,24 @@ export class Match implements IMatch {
     return oc;
   }
 
-  getServerMatchInfo(color: string): IServerMatchInfo {
+  getServerMatchInfo(rank: MatchServerRank): IServerMatchInfo {
     return {
-      kills: this.kills[color],
-      deaths: this.deaths[color],
-      all_worlds: this.allWorlds[color],
-      score: this.scores[color],
-      world: this.matchWorlds[color],
-      victory_points: this.victory_points[color],
-      skirmish_score: this.lastSkirmish.scores[color],
-      scorePercent: this.scorePercentages[color],
-      ppt: this.ppt[color],
+      kills: this.kills[rank],
+      deaths: this.deaths[rank],
+      all_worlds: this.allWorlds[rank],
+      score: this.scores[rank],
+      world: this.matchWorlds[rank],
+      victory_points: this.victory_points[rank],
+      skirmish_score: this.lastSkirmish.scores[rank],
+      scorePercent: this.scorePercentages[rank],
+      ppt: this.ppt[rank],
       objectiveCount: {
-        camp: this.objectiveCount.camp[color],
-        tower: this.objectiveCount.tower[color],
-        keep: this.objectiveCount.keep[color],
-        castle: this.objectiveCount.castle[color],
+        camp: this.objectiveCount.camp[rank],
+        tower: this.objectiveCount.tower[rank],
+        keep: this.objectiveCount.keep[rank],
+        castle: this.objectiveCount.castle[rank],
       },
-      kd: parseFloat((this.kills[color] / this.deaths[color]).toFixed(2)),
+      kd: parseFloat((this.kills[rank] / this.deaths[rank]).toFixed(2)),
     };
   }
 }
