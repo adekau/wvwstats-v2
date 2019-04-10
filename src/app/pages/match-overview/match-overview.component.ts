@@ -1,7 +1,7 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { map, takeWhile, delay, tap, take } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { Observable, combineLatest } from 'rxjs';
@@ -17,11 +17,63 @@ import { MatchServerRank } from '../../@core/enums/matchserverrank.enum';
   templateUrl: './match-overview.component.html',
   styleUrls: ['./match-overview.component.scss'],
 })
-export class MatchOverviewComponent implements OnInit, AfterViewInit {
+export class MatchOverviewComponent implements OnInit {
   match$: Observable<Match>;
   echartsInstance: any;
-  private alive = true;
-  option: any;
+  // private alive = true;
+  option = {
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985',
+        },
+      },
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {
+          title: 'Save as PNG',
+        },
+        dataView: {
+          title: 'Table View',
+          lang: ['Table View', 'Close', 'Refresh'],
+          readOnly: true,
+        },
+        dataZoom: {
+          yAxisIndex: 'none',
+          title: {
+            zoom: 'Zoom Selection',
+            back: 'Undo Zoom',
+          },
+        },
+        restore: {
+          title: 'Reset',
+        },
+      },
+    },
+    dataZoom: {
+      type: 'slider',
+      show: true,
+      realtime: true,
+      start: 0,
+      end: 100,
+    },
+    xAxis: {
+      type: 'category',
+    },
+    yAxis: {
+      type: 'value',
+      boundaryGap: [0, '100%'],
+      splitLine: {
+        show: true,
+      },
+    },
+    series: [
+    ],
+  };
+
   scoresChartData: any;
 
   minuteStep = 15;
@@ -103,61 +155,16 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.theme.getJsTheme()
-      .pipe(
-        takeWhile(() => this.alive),
-        delay(1),
-      )
-      .subscribe(config => {
-        const eTheme: any = config.variables.orders;
-
-        this.setOptions(eTheme);
-      });
-  }
-
-  setOptions(eTheme) {
-    this.option = {
-      grid: {
-        left: 40,
-        top: 20,
-        right: 0,
-        bottom: 40,
-      },
-      tooltip: {
-        trigger: 'axis',
-        // formatter: function (params) {
-        //   params = params[0];
-        //   var date = new Date(params.value[0]);
-        //   return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-        // },
-        axisPointer: {
-          animation: false
-        }
-      },
-      // dataZoom: [{
-      //   startValue: '2019-04-09'
-      // }, {
-      //   type: 'inside'
-      // }],
-      xAxis: {
-        type: 'time',
-        splitLine: {
-          show: false
-        }
-      },
-      yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%'],
-        splitLine: {
-          show: true
-        }
-      },
-      series: [
-      ],
-    };
-  }
-
+  // ngAfterViewInit(): void {
+  //   this.theme.getJsTheme()
+  //     .pipe(
+  //       takeWhile(() => this.alive),
+  //       delay(1),
+  //     )
+  //     .subscribe(config => {
+  //       const eTheme: any = config.variables.orders;
+  //     });
+  // }
 
   selectedRegion(params: ParamMap): GW2Region {
     if (params && params.has('region')) {
@@ -184,14 +191,17 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
     ).subscribe((scores: MatchArchiveScoresCollection) => {
       const data = [
         {
+          name: match.matchWorlds.green.name,
           type: 'line',
           color: 'green',
           data: scores.flattenTo(MatchServerRank.FIRST),
         }, {
+          name: match.matchWorlds.blue.name,
           type: 'line',
           color: 'blue',
           data: scores.flattenTo(MatchServerRank.SECOND),
         }, {
+          name: match.matchWorlds.red.name,
           type: 'line',
           color: 'red',
           data: scores.flattenTo(MatchServerRank.THIRD),
@@ -199,17 +209,23 @@ export class MatchOverviewComponent implements OnInit, AfterViewInit {
       ];
 
       this.scoresChartData = {
+        legend: {
+          left: 0,
+          data: [
+            match.matchWorlds.green.name,
+            match.matchWorlds.blue.name,
+            match.matchWorlds.red.name,
+          ],
+        },
         xAxis: {
           type: 'category',
           splitLine: {
-            show: false
+            show: false,
           },
-          data: scores.snapshotTimes.map(t => t.replace('T', '\n')),
+          data: scores.snapshotTimes.map(t => new Date(t).toLocaleString()),
         },
         series: data,
       };
-
-      console.log(this.scoresChartData.xAxis);
     });
   }
 
