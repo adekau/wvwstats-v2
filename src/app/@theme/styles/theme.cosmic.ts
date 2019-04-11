@@ -129,10 +129,16 @@ export const COSMIC_THEME = {
       bg: '#3d3780',
       textColor: '#ffffff',
       axisLineColor: '#a1a1e5',
-      splitLineColor: '#342e73',
+      splitLineColor: 'rgba(180, 180, 180, 0.35)',
       itemHoverShadowColor: 'rgba(0, 0, 0, 0.5)',
-      tooltipBackgroundColor: '#6a7985',
+      tooltipBackgroundColor: '#d1d2fd',
+      tooltipTextColor: '#524f90',
       areaOpacity: '1',
+      lightTextColor: '#a1a1e5',
+      emphasisTextColor: '#ffffff',
+      sliderLineColor: 'rgba(255, 255, 255, 0.9)',
+      sliderLineArea: '#ffffff',
+      color: ['#22d77b', '#178bfb', '#fc3c6c'],
     },
 
     chartjs: {

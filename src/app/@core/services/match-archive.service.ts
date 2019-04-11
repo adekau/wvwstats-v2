@@ -28,7 +28,6 @@ export class MatchArchiveService extends MatchArchiveData {
     if (!this.scores$[key]) {
       this.scores$[key] = this.requestMatchArchive('scores', match).pipe(
         map((val: IMatchArchive[]) => new MatchArchiveScoresCollection(val)),
-        tap((t) => console.log(t)),
         shareReplay(BUFFER_SIZE),
       );
     }

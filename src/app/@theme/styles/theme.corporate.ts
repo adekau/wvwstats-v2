@@ -131,7 +131,13 @@ export const CORPORATE_THEME = {
       splitLineColor: '#ebeef2',
       itemHoverShadowColor: 'rgba(0, 0, 0, 0.5)',
       tooltipBackgroundColor: '#6a7985',
+      tooltipTextColor: '#ffffff',
       areaOpacity: '0.7',
+      lightTextColor: '#777777',
+      emphasisTextColor: '#69b4fc',
+      sliderLineColor: '#2f4554',
+      sliderLineArea: 'rgba(47,69,84,0.3)',
+      color: ['#22d77b', '#178bfb', '#fc3c6c'],
     },
 
     chartjs: {

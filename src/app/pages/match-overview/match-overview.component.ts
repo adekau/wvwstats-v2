@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
-import { map, tap, take } from 'rxjs/operators';
+import { map, tap, take, takeWhile, delay } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { Observable, combineLatest } from 'rxjs';
@@ -17,10 +17,10 @@ import { MatchServerRank } from '../../@core/enums/matchserverrank.enum';
   templateUrl: './match-overview.component.html',
   styleUrls: ['./match-overview.component.scss'],
 })
-export class MatchOverviewComponent implements OnInit {
+export class MatchOverviewComponent implements AfterViewInit {
   match$: Observable<Match>;
   echartsInstance: any;
-  // private alive = true;
+  private alive = true;
   option = {
     tooltip: {
       trigger: 'axis',
@@ -138,33 +138,36 @@ export class MatchOverviewComponent implements OnInit {
     private theme: NbThemeService,
   ) { }
 
-  ngOnInit() {
+  ngAfterViewInit(): void {
     this.match$ = combineLatest(
       this.matchService.matches,
       this.route.paramMap,
+      this.echartsThemeSettings(),
     ).pipe(
       tap(([_, params]) => {
         this.matchService.matchKdData(this.selectedRegion(params), parseInt(params.get('tier'), 10))
           .subscribe((data) => this.source.load(data));
       }),
-      map(([matches, params]) =>
-        matches.find(this.selectedRegion(params), parseInt(params.get('tier'), 10))),
-      tap((match) => {
-        this.getChartData(match);
+      map(([matches, params, theme]) => {
+        const match = matches
+          .find(
+            this.selectedRegion(params),
+            parseInt(params.get('tier'), 10),
+          );
+        this.getChartData(match, theme);
+        return match;
       }),
     );
   }
 
-  // ngAfterViewInit(): void {
-  //   this.theme.getJsTheme()
-  //     .pipe(
-  //       takeWhile(() => this.alive),
-  //       delay(1),
-  //     )
-  //     .subscribe(config => {
-  //       const eTheme: any = config.variables.orders;
-  //     });
-  // }
+  private echartsThemeSettings() {
+    return this.theme.getJsTheme()
+      .pipe(
+        takeWhile(() => this.alive),
+        delay(1),
+        map(config => config.variables.echarts)
+      );
+  }
 
   selectedRegion(params: ParamMap): GW2Region {
     if (params && params.has('region')) {
@@ -185,7 +188,8 @@ export class MatchOverviewComponent implements OnInit {
     this.echartsInstance = echarts;
   }
 
-  getChartData(match: Match) {
+  getChartData(match: Match, theme: any) {
+    console.log(theme);
     this.archive.scores(match).pipe(
       take(1),
     ).subscribe((scores: MatchArchiveScoresCollection) => {
@@ -193,17 +197,17 @@ export class MatchOverviewComponent implements OnInit {
         {
           name: match.matchWorlds.green.name,
           type: 'line',
-          color: 'green',
+          // color: 'green',
           data: scores.flattenTo(MatchServerRank.FIRST),
         }, {
           name: match.matchWorlds.blue.name,
           type: 'line',
-          color: 'blue',
+          // color: 'blue',
           data: scores.flattenTo(MatchServerRank.SECOND),
         }, {
           name: match.matchWorlds.red.name,
           type: 'line',
-          color: 'red',
+          // color: 'red',
           data: scores.flattenTo(MatchServerRank.THIRD),
         },
       ];
@@ -211,22 +215,101 @@ export class MatchOverviewComponent implements OnInit {
       this.scoresChartData = {
         legend: {
           left: 0,
+          textStyle: {
+            color: theme.textColor,
+          },
           data: [
             match.matchWorlds.green.name,
             match.matchWorlds.blue.name,
             match.matchWorlds.red.name,
           ],
         },
+        toolbox: {
+          iconStyle: {
+            borderColor: theme.lightTextColor,
+            emphasis: {
+              borderColor: theme.emphasisTextColor,
+            },
+          },
+          feature: {
+            dataView: {
+              backgroundColor: theme.bg,
+              textareaColor: theme.bg,
+              textColor: theme.textColor,
+              textareaBorderColor: theme.axisLineColor,
+            }
+          },
+        },
+        tooltip: {
+          textStyle: {
+            color: theme.tooltipTextColor,
+          },
+          axisPointer: {
+            lineStyle: {
+              color: theme.axisLineColor,
+            },
+            crossStyle: {
+              color: theme.axisLineColor,
+            },
+            label: {
+              color: theme.tooltipTextColor,
+              backgroundColor: theme.tooltipBackgroundColor,
+              shadowColor: theme.itemHoverShadowColor,
+            },
+          },
+          backgroundColor: theme.tooltipBackgroundColor,
+        },
+        dataZoom: {
+          dataBackground: {
+            lineStyle: {
+              color: theme.sliderLineColor,
+            },
+            areaStyle: {
+              color: theme.sliderLineArea,
+            },
+          },
+          textStyle: {
+            color: theme.textColor,
+          },
+        },
         xAxis: {
           type: 'category',
           splitLine: {
             show: false,
           },
+          axisLine: {
+            lineStyle: {
+              color: theme.axisLineColor,
+            },
+          },
+          axisLabel: {
+            color: theme.lightTextColor,
+          },
           data: scores.snapshotTimes.map(t => new Date(t).toLocaleString()),
         },
+        yAxis: {
+          splitLine: {
+            lineStyle: {
+              color: theme.splitLineColor,
+            },
+          },
+          axisLine: {
+            lineStyle: {
+              color: theme.axisLineColor,
+            },
+          },
+          axisLabel: {
+            color: theme.lightTextColor,
+          },
+        },
+        color: theme.color,
         series: data,
       };
     });
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 
 }
