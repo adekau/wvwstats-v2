@@ -69,6 +69,7 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { RouterModule } from '@angular/router';
+import { WvwChartComponent } from './components/wvw-chart/wvw-chart.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
 
@@ -155,7 +156,7 @@ const NB_THEME_PROVIDERS = [
 @NgModule({
   imports: [...BASE_MODULES, ...NB_MODULES, Ng2SmartTableModule],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES, Ng2SmartTableModule],
-  declarations: [...COMPONENTS, ...PIPES],
+  declarations: [...COMPONENTS, ...PIPES, WvwChartComponent],
   entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {
