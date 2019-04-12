@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { MatchArchiveService } from '../../../@core/services/match-archive.service';
 import { Match } from '../../../@core/models/match.model';
 import { MatchServerRank } from '../../../@core/enums/matchserverrank.enum';
@@ -10,7 +10,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './wvw-chart.component.html',
   styleUrls: ['./wvw-chart.component.scss'],
 })
-export class WvwChartComponent implements AfterViewInit {
+export class WvwChartComponent implements AfterViewInit, OnChanges {
   @Input() match: Match;
   @Input() data: string;
   @Input() theme: any;
@@ -79,6 +79,10 @@ export class WvwChartComponent implements AfterViewInit {
     this.getChartData();
   }
 
+  ngOnChanges() {
+    this.getChartData();
+  }
+
   getChartData() {
     if (this.data.toLowerCase() === 'scores') {
       this.getScoresChart();
@@ -97,17 +101,14 @@ export class WvwChartComponent implements AfterViewInit {
         {
           name: match.matchWorlds.green.name,
           type: 'line',
-          // color: 'green',
           data: scores.flattenTo(MatchServerRank.FIRST),
         }, {
           name: match.matchWorlds.blue.name,
           type: 'line',
-          // color: 'blue',
           data: scores.flattenTo(MatchServerRank.SECOND),
         }, {
           name: match.matchWorlds.red.name,
           type: 'line',
-          // color: 'red',
           data: scores.flattenTo(MatchServerRank.THIRD),
         },
       ];
