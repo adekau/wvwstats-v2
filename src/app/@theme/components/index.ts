@@ -9,3 +9,4 @@ export * from './toggle-settings-button/toggle-settings-button.component';
 export * from './matchup-card/matchup-card.component';
 export * from './matchup-header-card/matchup-header-card.component';
 export * from './matchup-card/matchup-card-row/matchup-card-row.component';
+export * from './wvw-chart/wvw-chart.component';

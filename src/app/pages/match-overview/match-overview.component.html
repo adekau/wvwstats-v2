@@ -61,7 +61,8 @@
         Score Evolution
       </nb-card-header>
       <nb-card-body>
-        <div echarts [options]="option" [merge]="scoresChartData" class="echart" (chartInit)="onChartInit($event)">
+        <div *ngIf="match$ | async as match">
+          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="scores"></ngx-wvw-chart>
         </div>
       </nb-card-body>
     </nb-card>

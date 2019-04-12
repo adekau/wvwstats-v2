@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import {
   NbActionsModule,
@@ -50,6 +51,7 @@ import {
   MatchupCardComponent,
   MatchupCardRowComponent,
   MatchupHeaderCardComponent,
+  WvwChartComponent,
 } from './components';
 import {
   CapitalizePipe,
@@ -69,9 +71,10 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { COSMIC_THEME } from './styles/theme.cosmic';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { RouterModule } from '@angular/router';
-import { WvwChartComponent } from './components/wvw-chart/wvw-chart.component';
 
 const BASE_MODULES = [CommonModule, FormsModule, ReactiveFormsModule, RouterModule];
+
+const THIRD_PARTY_MODULES = [NgxEchartsModule, Ng2SmartTableModule];
 
 const NB_MODULES = [
   NbCardModule,
@@ -123,6 +126,7 @@ const COMPONENTS = [
   MatchupCardComponent,
   MatchupCardRowComponent,
   MatchupHeaderCardComponent,
+  WvwChartComponent,
 ];
 
 const ENTRY_COMPONENTS = [
@@ -154,9 +158,9 @@ const NB_THEME_PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [...BASE_MODULES, ...NB_MODULES, Ng2SmartTableModule],
+  imports: [...BASE_MODULES, ...NB_MODULES, ...THIRD_PARTY_MODULES],
   exports: [...BASE_MODULES, ...NB_MODULES, ...COMPONENTS, ...PIPES, Ng2SmartTableModule],
-  declarations: [...COMPONENTS, ...PIPES, WvwChartComponent],
+  declarations: [...COMPONENTS, ...PIPES],
   entryComponents: [...ENTRY_COMPONENTS],
 })
 export class ThemeModule {
