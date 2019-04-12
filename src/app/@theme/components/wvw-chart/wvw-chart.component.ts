@@ -5,7 +5,7 @@ import { Match } from '../../../@core/models/match.model';
 @Component({
   selector: 'ngx-wvw-chart',
   templateUrl: './wvw-chart.component.html',
-  styleUrls: ['./wvw-chart.component.scss']
+  styleUrls: ['./wvw-chart.component.scss'],
 })
 export class WvwChartComponent implements AfterViewInit {
   @Input() match: Match;

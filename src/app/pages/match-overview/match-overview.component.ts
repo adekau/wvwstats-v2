@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Match } from '../../@core/models/match.model';
 import { map, tap, take, takeWhile, delay } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { MatchServerRank } from '../../@core/enums/matchserverrank.enum';
   templateUrl: './match-overview.component.html',
   styleUrls: ['./match-overview.component.scss'],
 })
-export class MatchOverviewComponent implements AfterViewInit {
+export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
   match$: Observable<Match>;
   echartsInstance: any;
   private alive = true;
@@ -165,7 +165,7 @@ export class MatchOverviewComponent implements AfterViewInit {
       .pipe(
         takeWhile(() => this.alive),
         delay(1),
-        map(config => config.variables.echarts)
+        map(config => config.variables.echarts),
       );
   }
 
@@ -237,7 +237,7 @@ export class MatchOverviewComponent implements AfterViewInit {
               textareaColor: theme.bg,
               textColor: theme.textColor,
               textareaBorderColor: theme.axisLineColor,
-            }
+            },
           },
         },
         tooltip: {

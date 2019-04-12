@@ -8,7 +8,7 @@ describe('WvwChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WvwChartComponent ]
+      declarations: [ WvwChartComponent ],
     })
     .compileComponents();
   }));
