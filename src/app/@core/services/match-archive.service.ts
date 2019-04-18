@@ -74,7 +74,7 @@ export class MatchArchiveService extends MatchArchiveData {
       this.deaths(match),
     ).pipe(
       map(([kills, deaths]: [MatchArchiveKillsCollection, MatchArchiveDeathsCollection]) =>
-        new MatchArchiveKDCollection(kills, deaths)
+        new MatchArchiveKDCollection(kills, deaths),
       ),
     );
   }

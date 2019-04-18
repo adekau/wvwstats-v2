@@ -1,8 +1,8 @@
-import { MatchArchiveCollection } from "./matcharchive.collection";
-import { IMatchArchive } from "../../models/matcharchive.model";
-import { MatchServerRank } from "../../enums/matchserverrank.enum";
-import { MatchArchiveDeathsCollection } from "./matcharchive-deaths.collection";
-import { MatchArchiveKillsCollection } from "./matcharchive-kills.collection";
+import { MatchArchiveCollection } from './matcharchive.collection';
+import { IMatchArchive } from '../../models/matcharchive.model';
+import { MatchServerRank } from '../../enums/matchserverrank.enum';
+import { MatchArchiveDeathsCollection } from './matcharchive-deaths.collection';
+import { MatchArchiveKillsCollection } from './matcharchive-kills.collection';
 
 export class MatchArchiveKDCollection extends MatchArchiveCollection {
   constructor(kills: MatchArchiveKillsCollection, deaths: MatchArchiveDeathsCollection) {
@@ -16,7 +16,7 @@ export class MatchArchiveKDCollection extends MatchArchiveCollection {
           blue: val.kills.blue / relatedDeathsObj.deaths.blue,
           green: val.kills.green / relatedDeathsObj.deaths.green,
         },
-      }
+      };
 
       this.archive.push(kdObj);
     });

@@ -1,6 +1,6 @@
-import { MatchArchiveCollection } from "./matcharchive.collection";
-import { IMatchArchive } from "../../models/matcharchive.model";
-import { MatchServerRank } from "../../enums/matchserverrank.enum";
+import { MatchArchiveCollection } from './matcharchive.collection';
+import { IMatchArchive } from '../../models/matcharchive.model';
+import { MatchServerRank } from '../../enums/matchserverrank.enum';
 
 export class MatchArchiveKillsCollection extends MatchArchiveCollection {
   constructor(res: IMatchArchive[]) {
