@@ -58,11 +58,22 @@
     <!-- Graphs -->
     <nb-card accent="info">
       <nb-card-header>
-        Score Evolution
+        K/D Evolution
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="match$ | async as match">
-          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="scores"></ngx-wvw-chart>
+          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="kd"></ngx-wvw-chart>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+    <nb-card>
+      <nb-card-header>
+        PPT Evolution
+      </nb-card-header>
+      <nb-card-body>
+        <div *ngIf="match$ | async as match">
+          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="ppt"></ngx-wvw-chart>
         </div>
       </nb-card-body>
     </nb-card>

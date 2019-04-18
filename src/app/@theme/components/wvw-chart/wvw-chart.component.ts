@@ -4,6 +4,8 @@ import { Match } from '../../../@core/models/match.model';
 import { MatchServerRank } from '../../../@core/enums/matchserverrank.enum';
 import { MatchArchiveScoresCollection } from '../../../@core/collections/matcharchive/matcharchive-scores.collection';
 import { take } from 'rxjs/operators';
+import { MatchArchiveCollection } from '../../../@core/collections/matcharchive/matcharchive.collection';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngx-wvw-chart',
@@ -84,129 +86,137 @@ export class WvwChartComponent implements AfterViewInit, OnChanges {
   }
 
   getChartData() {
+    const match = this.match;
     if (this.data.toLowerCase() === 'scores') {
-      this.getScoresChart();
+      this.getChart(this.archive.scores(match));
+    } else if (this.data.toLowerCase() === 'kd') {
+      this.getChart(this.archive.kd(match));
+    } else if (this.data.toLowerCase() === 'ppt') {
+      this.getChart(this.archive.ppt(match));
     } else {
       throw new Error('Invalid chart data type.');
     }
   }
 
-  getScoresChart() {
-    const theme = this.theme;
-    const match = this.match;
-    this.archive.scores(match).pipe(
+  getChart(obs: Observable<MatchArchiveCollection>) {
+    obs.pipe(
       take(1),
-    ).subscribe((scores: MatchArchiveScoresCollection) => {
-      const data = [
-        {
-          name: match.matchWorlds.green.name,
-          type: 'line',
-          data: scores.flattenTo(MatchServerRank.FIRST),
-        }, {
-          name: match.matchWorlds.blue.name,
-          type: 'line',
-          data: scores.flattenTo(MatchServerRank.SECOND),
-        }, {
-          name: match.matchWorlds.red.name,
-          type: 'line',
-          data: scores.flattenTo(MatchServerRank.THIRD),
-        },
-      ];
+    ).subscribe(this.handleChartRender.bind(this));
+  }
 
-      this.dynamicChartOpts = {
-        legend: {
-          left: 0,
-          textStyle: {
-            color: theme.textColor,
-          },
-          data: [
-            match.matchWorlds.green.name,
-            match.matchWorlds.blue.name,
-            match.matchWorlds.red.name,
-          ],
+  handleChartRender(col: MatchArchiveCollection) {
+    const match = this.match;
+    const theme = this.theme;
+
+    const data = [
+      {
+        name: match.matchWorlds.green.name,
+        type: 'line',
+        data: col.flattenTo(MatchServerRank.FIRST),
+      }, {
+        name: match.matchWorlds.blue.name,
+        type: 'line',
+        data: col.flattenTo(MatchServerRank.SECOND),
+      }, {
+        name: match.matchWorlds.red.name,
+        type: 'line',
+        data: col.flattenTo(MatchServerRank.THIRD),
+      },
+    ];
+
+    this.dynamicChartOpts = {
+      legend: {
+        left: 0,
+        textStyle: {
+          color: theme.textColor,
         },
-        toolbox: {
-          iconStyle: {
-            borderColor: theme.lightTextColor,
-            emphasis: {
-              borderColor: theme.emphasisTextColor,
-            },
-          },
-          feature: {
-            dataView: {
-              backgroundColor: theme.bg,
-              textareaColor: theme.bg,
-              textColor: theme.textColor,
-              textareaBorderColor: theme.axisLineColor,
-            },
+        data: [
+          match.matchWorlds.green.name,
+          match.matchWorlds.blue.name,
+          match.matchWorlds.red.name,
+        ],
+      },
+      toolbox: {
+        iconStyle: {
+          borderColor: theme.lightTextColor,
+          emphasis: {
+            borderColor: theme.emphasisTextColor,
           },
         },
-        tooltip: {
-          textStyle: {
+        feature: {
+          dataView: {
+            backgroundColor: theme.bg,
+            textareaColor: theme.bg,
+            textColor: theme.textColor,
+            textareaBorderColor: theme.axisLineColor,
+          },
+        },
+      },
+      tooltip: {
+        textStyle: {
+          color: theme.tooltipTextColor,
+        },
+        axisPointer: {
+          lineStyle: {
+            color: theme.axisLineColor,
+          },
+          crossStyle: {
+            color: theme.axisLineColor,
+          },
+          label: {
             color: theme.tooltipTextColor,
-          },
-          axisPointer: {
-            lineStyle: {
-              color: theme.axisLineColor,
-            },
-            crossStyle: {
-              color: theme.axisLineColor,
-            },
-            label: {
-              color: theme.tooltipTextColor,
-              backgroundColor: theme.tooltipBackgroundColor,
-              shadowColor: theme.itemHoverShadowColor,
-            },
-          },
-          backgroundColor: theme.tooltipBackgroundColor,
-        },
-        dataZoom: {
-          dataBackground: {
-            lineStyle: {
-              color: theme.sliderLineColor,
-            },
-            areaStyle: {
-              color: theme.sliderLineArea,
-            },
-          },
-          textStyle: {
-            color: theme.textColor,
+            backgroundColor: theme.tooltipBackgroundColor,
+            shadowColor: theme.itemHoverShadowColor,
           },
         },
-        xAxis: {
-          type: 'category',
-          splitLine: {
-            show: false,
+        backgroundColor: theme.tooltipBackgroundColor,
+      },
+      dataZoom: {
+        dataBackground: {
+          lineStyle: {
+            color: theme.sliderLineColor,
           },
-          axisLine: {
-            lineStyle: {
-              color: theme.axisLineColor,
-            },
-          },
-          axisLabel: {
-            color: theme.lightTextColor,
-          },
-          data: scores.snapshotTimes.map(t => new Date(t).toLocaleString()),
-        },
-        yAxis: {
-          splitLine: {
-            lineStyle: {
-              color: theme.splitLineColor,
-            },
-          },
-          axisLine: {
-            lineStyle: {
-              color: theme.axisLineColor,
-            },
-          },
-          axisLabel: {
-            color: theme.lightTextColor,
+          areaStyle: {
+            color: theme.sliderLineArea,
           },
         },
-        color: theme.color,
-        series: data,
-      };
-    });
+        textStyle: {
+          color: theme.textColor,
+        },
+      },
+      xAxis: {
+        type: 'category',
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          lineStyle: {
+            color: theme.axisLineColor,
+          },
+        },
+        axisLabel: {
+          color: theme.lightTextColor,
+        },
+        data: col.snapshotTimes.map(t => new Date(t).toLocaleString()),
+      },
+      yAxis: {
+        splitLine: {
+          lineStyle: {
+            color: theme.splitLineColor,
+          },
+        },
+        axisLine: {
+          lineStyle: {
+            color: theme.axisLineColor,
+          },
+        },
+        axisLabel: {
+          color: theme.lightTextColor,
+        },
+      },
+      color: theme.color,
+      series: data,
+    };
   }
 
   onChartInit(inst) {

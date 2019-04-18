@@ -11,8 +11,4 @@ export class MatchArchiveScoresCollection extends MatchArchiveCollection {
     return this.archive
       .map((ma: IMatchArchive) => ma.scores[rank]);
   }
-
-  get snapshotTimes() {
-    return this.archive.map((ma: IMatchArchive) => ma.snapshot_time);
-  }
 }
