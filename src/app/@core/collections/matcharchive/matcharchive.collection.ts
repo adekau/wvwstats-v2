@@ -13,7 +13,7 @@ export class MatchArchiveCollection {
   }
 
   flattenTo(rank: MatchServerRank) { }
- 
+
   get snapshotTimes() {
     return this.archive.map((ma: IMatchArchive) => ma.snapshot_time);
   }
