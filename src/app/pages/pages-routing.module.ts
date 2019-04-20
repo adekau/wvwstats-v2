@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { MatchOverviewComponent } from './match-overview/match-overview.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +19,9 @@ const routes: Routes = [{
   }, {
     path: 'match/:region/:tier',
     component: MatchOverviewComponent,
+  }, {
+    path: 'search/:term',
+    component: SearchResultsComponent,
   }, {
     path: '',
     redirectTo: 'na',

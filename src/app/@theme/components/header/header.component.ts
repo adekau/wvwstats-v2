@@ -1,18 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { NbMenuService, NbSidebarService, NbSearchService } from '@nebular/theme';
 import { AnalyticsService } from '../../../@core/utils';
 import { LayoutService } from '../../../@core/utils';
+import { takeWhile } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
   @Input() position = 'normal';
 
+  private alive: boolean = true;
   user: any;
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
@@ -23,12 +26,16 @@ export class HeaderComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private layoutService: LayoutService,
     private searchService: NbSearchService,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
-    this.searchService.onSearchSubmit().subscribe((data) => console.log(data));
-    this.searchService.onSearchInput().subscribe((d) => console.log(d));
+    this.searchService.onSearchSubmit()
+      .pipe(
+        takeWhile(() => this.alive),
+      )
+      .subscribe(this.handleSearch.bind(this));
   }
 
   toggleSidebar(): boolean {
@@ -44,5 +51,13 @@ export class HeaderComponent implements OnInit {
 
   startSearch() {
     this.analyticsService.trackEvent('startSearch');
+  }
+
+  handleSearch(searchObj: { term: string, tag?: string }) {
+    this.router.navigate(['/search', searchObj.term]);
+  }
+
+  ngOnDestroy() {
+    this.alive = false;
   }
 }
