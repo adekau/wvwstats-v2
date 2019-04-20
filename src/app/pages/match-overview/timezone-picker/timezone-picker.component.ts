@@ -6,7 +6,7 @@ import { Match } from '../../../@core/models/match.model';
 @Component({
   selector: 'ngx-timezone-picker',
   templateUrl: './timezone-picker.component.html',
-  styleUrls: ['./timezone-picker.component.scss']
+  styleUrls: ['./timezone-picker.component.scss'],
 })
 export class TimezonePickerComponent implements OnInit {
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;

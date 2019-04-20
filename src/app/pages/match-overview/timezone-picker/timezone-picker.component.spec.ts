@@ -8,7 +8,7 @@ describe('TimezonePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimezonePickerComponent ]
+      declarations: [ TimezonePickerComponent ],
     })
     .compileComponents();
   }));

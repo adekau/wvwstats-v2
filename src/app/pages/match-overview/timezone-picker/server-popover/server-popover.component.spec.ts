@@ -8,7 +8,7 @@ describe('ServerPopoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ServerPopoverComponent ]
+      declarations: [ ServerPopoverComponent ],
     })
     .compileComponents();
   }));
