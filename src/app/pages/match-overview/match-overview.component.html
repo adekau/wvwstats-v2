@@ -12,7 +12,8 @@
         <nb-actions size="medium" fullWidth>
           <nb-action nbTooltip="Map" icon="nb-location"></nb-action>
           <nb-action nbTooltip="Graphs" icon="nb-bar-chart"></nb-action>
-          <nb-action nbTooltip="Timezone Data" icon="nb-sunny-circled">
+          <nb-action *ngIf="match$ | async as match">
+            <ngx-timezone-picker nbTooltip="Timezone Data" [match]="match"></ngx-timezone-picker>
           </nb-action>
         </nb-actions>
       </nb-card-body>

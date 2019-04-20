@@ -1,0 +1,60 @@
+@import '../../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/core/mixins';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  /deep/ .server-list {
+    box-sizing: border-box;
+    padding: 3px;
+    margin: 0;
+
+    .server-item {
+      padding: 5px;
+      border: 2px solid transparent;
+      list-style: none;
+      cursor: pointer;
+      box-sizing: content-box;
+
+      &:hover {
+        border: 2px solid nb-theme(menu-submenu-active-border-color);
+        border-radius: 4px;
+      }
+
+      &:hover span {
+        color: nb-theme(link-color-hover);
+      }
+
+      span {
+        font-weight: 300;
+        vertical-align: super;
+        padding-left: 1rem;
+        color: nb-theme(color-fg-heading);
+      }
+    }
+
+    .server-item:nth-of-type(1) {
+      i {
+        color: #22d77b;
+      }
+    }
+
+    .server-item:nth-of-type(2) {
+      i {
+        color: #178bfb;
+      }
+    }
+
+    .server-item:nth-of-type(3) {
+      i {
+        color: #fc3c6c;
+      }
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    /deep/ .server-list {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<ul class="server-list" *ngIf="match && match.matchWorlds as mw">
+  <li class="server-item" *ngFor="let server of [mw.green, mw.blue, mw.red]" (click)="handleClick(server)">
+    <i class="nb-square"></i>
+    <span>{{ server.name }}</span>
+  </li>
+</ul>
