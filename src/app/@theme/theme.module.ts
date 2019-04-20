@@ -43,11 +43,9 @@ import {
   FooterComponent,
   HeaderComponent,
   SearchInputComponent,
-  SwitcherComponent,
   ThemeSwitcherComponent,
   TinyMCEComponent,
   ThemeSwitcherListComponent,
-  ToggleSettingsButtonComponent,
   MatchupCardComponent,
   MatchupCardRowComponent,
   MatchupHeaderCardComponent,
@@ -111,7 +109,6 @@ const NB_MODULES = [
 ];
 
 const COMPONENTS = [
-  SwitcherComponent,
   ThemeSwitcherComponent,
   ThemeSwitcherListComponent,
   HeaderComponent,
@@ -122,7 +119,6 @@ const COMPONENTS = [
   SampleLayoutComponent,
   ThreeColumnsLayoutComponent,
   TwoColumnsLayoutComponent,
-  ToggleSettingsButtonComponent,
   MatchupCardComponent,
   MatchupCardRowComponent,
   MatchupHeaderCardComponent,

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { NbMenuService, NbSidebarService } from '@nebular/theme';
+import { NbMenuService, NbSidebarService, NbSearchService } from '@nebular/theme';
 import { AnalyticsService } from '../../../@core/utils';
 import { LayoutService } from '../../../@core/utils';
 
@@ -17,13 +17,18 @@ export class HeaderComponent implements OnInit {
 
   userMenu = [{ title: 'Profile' }, { title: 'Log out' }];
 
-  constructor(private sidebarService: NbSidebarService,
-              private menuService: NbMenuService,
-              private analyticsService: AnalyticsService,
-              private layoutService: LayoutService) {
+  constructor(
+    private sidebarService: NbSidebarService,
+    private menuService: NbMenuService,
+    private analyticsService: AnalyticsService,
+    private layoutService: LayoutService,
+    private searchService: NbSearchService,
+  ) {
   }
 
   ngOnInit() {
+    this.searchService.onSearchSubmit().subscribe((data) => console.log(data));
+    this.searchService.onSearchInput().subscribe((d) => console.log(d));
   }
 
   toggleSidebar(): boolean {
