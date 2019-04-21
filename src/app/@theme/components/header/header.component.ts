@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { NbMenuService, NbSidebarService, NbSearchService } from '@nebular/theme';
 import { AnalyticsService } from '../../../@core/utils';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
   templateUrl: './header.component.html',
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() position = 'normal';
 
@@ -38,11 +38,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(this.handleSearch.bind(this));
   }
 
+  ngAfterViewInit() {
+    if (window.localStorage.getItem('sidebar-compact') === 'true') {
+      this.sidebarService.toggle(true ,'menu-sidebar');
+    }
+  }
+
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
+    this.saveCompactSetting();
 
     return false;
+  }
+
+  saveCompactSetting() {
+    const c: boolean = window.localStorage.getItem('sidebar-compact') === 'true';
+    window.localStorage.setItem('sidebar-compact', (!c).toString());
   }
 
   goToHome() {
