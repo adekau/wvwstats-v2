@@ -17,9 +17,7 @@
   <div>{{ info.objectiveCount.tower }}</div>
   <div>{{ info.objectiveCount.keep }}</div>
   <div>{{ info.objectiveCount.castle }}</div>
-
-  <!-- Placeholder -->
-  <div>1909.124</div>
+  <div [nbTooltip]="glickoDelta">{{ predictedGlicko }}</div>
 
   <div>
     <strong *ngIf="topKd;else not_topKd">{{ info.kd }}</strong>

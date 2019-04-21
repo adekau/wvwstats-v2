@@ -3,6 +3,7 @@ import { Match } from '../../../../@core/models/match.model';
 import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 import { WorldCollection } from '../../../../@core/collections/world.collection';
 import { MatchServerRank } from '../../../../@core/enums/matchserverrank.enum';
+import { GlickoService } from '../../../../@core/services/glicko.service';
 
 @Component({
   selector: 'ngx-matchup-card-row',
@@ -21,8 +22,12 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
   serverTooltip: string;
   winning: boolean;
   topKd: boolean;
+  predictedGlicko: string;
+  glickoDelta: string;
 
-  constructor() { }
+  constructor(
+    private glicko: GlickoService,
+  ) { }
 
   ngOnInit() {
     this.serverColor = this.getServerColor();
@@ -33,6 +38,12 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.serverTooltip = this.getServerTooltip();
     this.winning = this.getWinning();
     this.topKd = this.isTopKd();
+
+    this.glicko.glicko.subscribe(gc => {
+      const glickoResult = gc.find(this.info.world.id);
+      this.predictedGlicko = glickoResult.glicko.rating.toFixed(3);
+      this.glickoDelta = glickoResult.glicko.delta.toFixed(3);
+    });
   }
 
   ngOnChanges() {
