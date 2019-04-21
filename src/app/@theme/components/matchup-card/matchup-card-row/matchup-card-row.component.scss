@@ -4,14 +4,8 @@
   .mc-row {
     display: grid;
     grid-template-columns: 17fr 18fr 10fr 10fr 6fr 6fr 6fr 6fr 10fr 10fr;
-    grid-column-gap: 5px;
+    grid-column-gap: 7px;
     margin-bottom: 8px;
-  }
-
-  .progress-value.danger.lowscore {
-    // color: nb-theme(fg-color) !important;
-    color: black !important;
-    overflow: unset !important;
   }
 
   a {
