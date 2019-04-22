@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     if (window.localStorage.getItem('sidebar-compact') === 'true') {
-      this.sidebarService.toggle(true ,'menu-sidebar');
+      this.sidebarService.toggle(true, 'menu-sidebar');
     }
   }
 

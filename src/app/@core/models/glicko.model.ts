@@ -1,9 +1,9 @@
 export interface IGlicko {
-  id: number,
+  id: number;
   glicko: {
     rating: number,
     deviation: number,
     volatility: number,
     delta: number,
-  },
+  };
 }

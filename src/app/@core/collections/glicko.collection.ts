@@ -1,4 +1,4 @@
-import { IGlicko } from "../models/glicko.model";
+import { IGlicko } from '../models/glicko.model';
 
 export class GlickoCollection {
   glicko: IGlicko[];
