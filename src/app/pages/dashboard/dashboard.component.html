@@ -1,11 +1,13 @@
-<div class="row" class="wvwstats-ct">
+<div class="row wvwstats-ct">
   <div class="col-xxxl-6 col-xxl-12">
     <ngx-matchup-header-card></ngx-matchup-header-card>
     <div *ngIf="matches">
-      <ngx-matchup-card
-        *ngFor="let match of matches.all()"
-        [match]="match"
-      ></ngx-matchup-card>
+      <ngx-matchup-card *ngFor="let match of matches.all()" [match]="match"></ngx-matchup-card>
     </div>
   </div>
 </div>
+<!-- <div class="row wvwstats-ct">
+  <div class="col-xxxl-6 col-xxl-12">
+    <ng2-smart-table></ng2-smart-table>
+  </div>
+</div> -->
