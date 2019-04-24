@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, OnInit } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { NbPopoverDirective } from '@nebular/theme';
 import { ServerPopoverComponent } from './server-popover/server-popover.component';
 import { Match } from '../../../@core/models/match.model';
@@ -8,14 +8,10 @@ import { Match } from '../../../@core/models/match.model';
   templateUrl: './timezone-picker.component.html',
   styleUrls: ['./timezone-picker.component.scss'],
 })
-export class TimezonePickerComponent implements OnInit {
+export class TimezonePickerComponent {
   @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
   @Input() match: Match;
 
   serverPopoverComponent = ServerPopoverComponent;
-
-  ngOnInit() {
-    console.log(this.match);
-  }
 }

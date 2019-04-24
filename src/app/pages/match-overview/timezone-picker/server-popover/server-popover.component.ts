@@ -12,7 +12,6 @@ export class ServerPopoverComponent {
   @Input() match: Match;
 
   handleClick(server) {
-    console.log(server);
     this.popover.hide();
   }
 }
