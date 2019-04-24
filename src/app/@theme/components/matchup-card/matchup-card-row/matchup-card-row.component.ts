@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Match } from '../../../../@core/models/match.model';
 import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model';
 import { WorldCollection } from '../../../../@core/collections/world.collection';
@@ -9,6 +9,7 @@ import { GlickoService } from '../../../../@core/services/glicko.service';
   selector: 'ngx-matchup-card-row',
   templateUrl: './matchup-card-row.component.html',
   styleUrls: ['./matchup-card-row.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MatchupCardRowComponent implements OnInit, OnChanges {
   @Input() rank: number;
@@ -27,6 +28,7 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
 
   constructor(
     private glicko: GlickoService,
+    private cd: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -38,11 +40,13 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.serverTooltip = this.getServerTooltip();
     this.winning = this.getWinning();
     this.topKd = this.isTopKd();
+    this.cd.markForCheck();
 
     this.glicko.glicko.subscribe(gc => {
       const glickoResult = gc.find(this.info.world.id);
       this.predictedGlicko = glickoResult.glicko.rating.toFixed(3);
       this.glickoDelta = glickoResult.glicko.delta.toFixed(3);
+      this.cd.markForCheck();
     });
   }
 
@@ -50,6 +54,13 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.info = this.match.getServerMatchInfo(this.serverColor);
     this.winning = this.getWinning();
     this.topKd = this.isTopKd();
+    this.glicko.glicko.subscribe(gc => {
+      const glickoResult = gc.find(this.info.world.id);
+      this.predictedGlicko = glickoResult.glicko.rating.toFixed(3);
+      this.glickoDelta = glickoResult.glicko.delta.toFixed(3);
+      this.cd.markForCheck();
+    });
+    this.cd.markForCheck();
   }
 
   getRankColor() {
