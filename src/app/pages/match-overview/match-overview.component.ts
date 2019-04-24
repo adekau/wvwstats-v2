@@ -5,9 +5,10 @@ import { map, tap, takeWhile, delay, shareReplay } from 'rxjs/operators';
 import { MatchService } from '../../@core/services/match.service';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { Observable, combineLatest } from 'rxjs';
-import { NbThemeService } from '@nebular/theme';
+import { NbThemeService, NbWindowService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { GraphsComponent } from '../graphs/graphs.component';
 
 @Component({
   selector: 'ngx-match-overview',
@@ -78,6 +79,7 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
     public route: ActivatedRoute,
     public matchService: MatchService,
     private theme: NbThemeService,
+    private windowService: NbWindowService,
   ) { }
 
   ngAfterViewInit(): void {
@@ -129,5 +131,9 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  openGraphs() {
+    this.windowService.open(GraphsComponent, { title: 'Graphs' });
   }
 }
