@@ -4,6 +4,7 @@ import { IServerMatchInfo } from '../../../../@core/models/servermatchinfo.model
 import { WorldCollection } from '../../../../@core/collections/world.collection';
 import { MatchServerRank } from '../../../../@core/enums/matchserverrank.enum';
 import { GlickoService } from '../../../../@core/services/glicko.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-matchup-card-row',
@@ -42,7 +43,7 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.topKd = this.isTopKd();
     this.cd.markForCheck();
 
-    this.glicko.glicko.subscribe(gc => {
+    this.glicko.glicko.pipe(take(1)).subscribe(gc => {
       const glickoResult = gc.find(this.info.world.id);
       this.predictedGlicko = glickoResult.glicko.rating.toFixed(3);
       this.glickoDelta = glickoResult.glicko.delta.toFixed(3);
@@ -54,7 +55,7 @@ export class MatchupCardRowComponent implements OnInit, OnChanges {
     this.info = this.match.getServerMatchInfo(this.serverColor);
     this.winning = this.getWinning();
     this.topKd = this.isTopKd();
-    this.glicko.glicko.subscribe(gc => {
+    this.glicko.glicko.pipe(take(1)).subscribe(gc => {
       const glickoResult = gc.find(this.info.world.id);
       this.predictedGlicko = glickoResult.glicko.rating.toFixed(3);
       this.glickoDelta = glickoResult.glicko.delta.toFixed(3);
