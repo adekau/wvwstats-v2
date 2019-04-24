@@ -6,6 +6,8 @@ import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from '../pages/miscellaneous/miscellaneous.module';
 import { MatchOverviewModule } from '../pages/match-overview/match-overview.module';
 import { SearchResultsModule } from './search-results/search-results.module';
+import { GraphsModule } from './graphs/graphs.module';
+import { MapModule } from './map/map.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -18,6 +20,8 @@ const PAGES_COMPONENTS = [
     DashboardModule,
     MatchOverviewModule,
     SearchResultsModule,
+    GraphsModule,
+    MapModule,
     MiscellaneousModule,
   ],
   declarations: [

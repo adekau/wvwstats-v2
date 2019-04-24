@@ -1,0 +1,28 @@
+<nb-card accent="info">
+  <nb-card-header>Settings</nb-card-header>
+  <nb-card-body>
+    <!-- <nb-select hero placeholder="Select World" (selectedChange)="changeWorld($event)">
+      <nb-option-group title="North America">
+        <nb-option *ngFor="let na of naWorlds" [value]="na.name">{{ na.name }}</nb-option>
+      </nb-option-group>
+      <nb-option-group title="Europe">
+        <nb-option *ngFor="let eu of euWorlds" [value]="eu.name">{{ eu.name }}</nb-option>
+      </nb-option-group>
+    </nb-select> -->
+
+    <select class="form-control" placeholder="Select World" (change)="changeWorld($event)">
+      <optgroup label="North America">
+        <option *ngFor="let na of naWorlds" [value]="na.name">{{ na.name }}</option>
+      </optgroup>
+      <optgroup label="Europe">
+        <option *ngFor="let eu of euWorlds" [value]="eu.name">{{ eu.name }}</option>
+      </optgroup>
+    </select>
+  </nb-card-body>
+</nb-card>
+<nb-card class="map">
+  <nb-card-header>Live Game Map</nb-card-header>
+  <nb-card-body>
+    <div leaflet [leafletOptions]="options" [leafletLayers]="layers" (leafletMapReady)="onMapReady($event)"></div>
+  </nb-card-body>
+</nb-card>

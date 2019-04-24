@@ -6,6 +6,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { MatchOverviewComponent } from './match-overview/match-overview.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { GraphsComponent } from './graphs/graphs.component';
+import { MapComponent } from './map/map.component';
 
 const routes: Routes = [{
   path: '',
@@ -19,6 +21,16 @@ const routes: Routes = [{
   }, {
     path: 'match/:region/:tier',
     component: MatchOverviewComponent,
+  }, {
+    path: 'graphs',
+    component: GraphsComponent,
+  }, {
+    path: 'map',
+    pathMatch: 'full',
+    redirectTo: 'map/',
+  }, {
+    path: 'map/:world',
+    component: MapComponent,
   }, {
     path: 'search/:term',
     component: SearchResultsComponent,
