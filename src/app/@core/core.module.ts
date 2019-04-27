@@ -11,6 +11,8 @@ import {
 import { ServicesModule } from './services/services.module';
 import { WorldService } from './services/world.service';
 import { ObjectiveService } from './services/objective.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TimeoutInterceptor, DEFAULT_TIMEOUT } from './interceptors/timeout.interceptor';
 
 const DATA_SERVICES = [
   // example { provide: UserData, useClass: UserService },
@@ -43,6 +45,8 @@ export class CoreModule {
       ngModule: CoreModule,
       providers: [
         ...NB_CORE_PROVIDERS,
+        [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
+        [{ provide: DEFAULT_TIMEOUT, useValue: 10000 }],
       ],
     };
   }
