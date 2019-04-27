@@ -23,6 +23,7 @@
 <nb-card class="map">
   <nb-card-header>Live Game Map</nb-card-header>
   <nb-card-body>
-    <div leaflet [leafletOptions]="options" [leafletLayers]="layers" (leafletMapReady)="onMapReady($event)"></div>
+    <div leaflet [leafletOptions]="options" [leafletLayers]="layers" (leafletMapReady)="onMapReady($event)"
+      [nbSpinner]="loading"></div>
   </nb-card-body>
 </nb-card>

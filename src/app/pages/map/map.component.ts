@@ -21,6 +21,7 @@ const MAX_ZOOM = 6;
 })
 export class MapComponent implements OnInit, OnDestroy {
   private alive: boolean = true;
+  loading = true;
   options = {
     crs: L.CRS.Simple,
     zoom: 3,
@@ -93,7 +94,7 @@ export class MapComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile(() => this.alive),
         tap(([icons, objectives]) => this.setupInitialMarkers(icons, objectives, map)),
-      ).subscribe();
+      ).subscribe(() => this.loading = false);
   }
 
   prepareIcons() {

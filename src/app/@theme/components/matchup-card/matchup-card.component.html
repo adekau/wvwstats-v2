@@ -1,7 +1,7 @@
-<nb-card>
+<nb-card [nbSpinner]="loading">
   <nb-card-body>
-    <ngx-matchup-card-row [rank]="1" [match]="match"></ngx-matchup-card-row>
-    <ngx-matchup-card-row [rank]="2" [match]="match"></ngx-matchup-card-row>
-    <ngx-matchup-card-row [rank]="3" [match]="match"></ngx-matchup-card-row>
+    <ngx-matchup-card-row [rank]="1" [match]="match" (loaded)="handleLoad($event)"></ngx-matchup-card-row>
+    <ngx-matchup-card-row [rank]="2" [match]="match" (loaded)="handleLoad($event)"></ngx-matchup-card-row>
+    <ngx-matchup-card-row [rank]="3" [match]="match" (loaded)="handleLoad($event)"></ngx-matchup-card-row>
   </nb-card-body>
 </nb-card>

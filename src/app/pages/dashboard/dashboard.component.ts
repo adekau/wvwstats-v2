@@ -6,7 +6,6 @@ import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { MatchCollection } from '../../@core/collections/match.collection';
 import { ActivatedRoute } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
-import { NbToastrConfig } from '@nebular/theme/components/toastr/toastr-config';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -18,6 +17,43 @@ export class DashboardComponent implements OnDestroy, OnInit {
   subscription: Subscription;
   matches: MatchCollection;
   onRetrySubscription: Subscription;
+  loading = true;
+
+  settings = {
+    hideSubHeader: true,
+    actions: {
+      add: false,
+      delete: false,
+      edit: false,
+    },
+    columns: {
+      rank: {
+        title: 'Rank',
+        type: 'string',
+        filter: false,
+      },
+      server: {
+        title: 'Server',
+        type: 'string',
+        filter: false,
+      },
+      old_rating: {
+        title: 'Current Rating',
+        type: 'string',
+        filter: false,
+      },
+      new_rating: {
+        title: 'Predicted Rating',
+        type: 'string',
+        filter: false,
+      },
+      change: {
+        title: 'Change',
+        type: 'string',
+        filter: false,
+      },
+    },
+  };
 
   constructor(
     protected matchService: MatchService,
@@ -35,17 +71,15 @@ export class DashboardComponent implements OnDestroy, OnInit {
           ),
         ),
       )
-      .subscribe(matches => (this.matches = matches), this.showErrorToast);
+      .subscribe(matches => {
+        this.matches = matches;
+        this.loading = false;
+      }, this.showErrorToast);
 
     // subscribe to onRetry event of the match service
     // to show a message that a request will be retried.
     this.onRetrySubscription = this.matchService.onRetry
       .subscribe(status => this.showErrorToast.apply(this, [status]));
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.onRetrySubscription.unsubscribe();
   }
 
   regionFromString(str: string): GW2Region {
@@ -67,5 +101,10 @@ export class DashboardComponent implements OnDestroy, OnInit {
         duration: 7500,
       },
     );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.onRetrySubscription.unsubscribe();
   }
 }

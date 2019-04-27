@@ -8,6 +8,15 @@
     justify-content: center;
   }
 
+  .match-container {
+    min-height: 70px;
+  }
+
+  .loading {
+    border-radius: 4px;
+    margin-bottom: 22px;
+  }
+
   @include media-breakpoint-down(sm) {
     ngx-traffic {
       display: none;

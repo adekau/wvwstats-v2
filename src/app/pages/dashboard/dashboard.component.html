@@ -1,13 +1,23 @@
 <div class="row wvwstats-ct">
   <div class="col-xxxl-6 col-xxl-12">
     <ngx-matchup-header-card></ngx-matchup-header-card>
-    <div *ngIf="matches">
-      <ngx-matchup-card *ngFor="let match of matches.all()" [match]="match"></ngx-matchup-card>
+    <div class="match-container" [class.loading]="loading" [nbSpinner]="loading">
+      <ng-template [ngIf]="matches">
+        <ngx-matchup-card *ngFor="let match of matches.all()" [match]="match">
+        </ngx-matchup-card>
+      </ng-template>
     </div>
   </div>
 </div>
-<!-- <div class="row wvwstats-ct">
+<div class="row wvwstats-ct">
   <div class="col-xxxl-6 col-xxl-12">
-    <ng2-smart-table></ng2-smart-table>
+    <nb-card>
+      <nb-card-header>
+        Server Rankings
+      </nb-card-header>
+      <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="[]"></ng2-smart-table>
+      </nb-card-body>
+    </nb-card>
   </div>
-</div> -->
+</div>

@@ -1,8 +1,7 @@
-import { Component, Input, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatchArchiveService } from '../../../@core/services/match-archive.service';
 import { Match } from '../../../@core/models/match.model';
 import { MatchServerRank } from '../../../@core/enums/matchserverrank.enum';
-import { MatchArchiveScoresCollection } from '../../../@core/collections/matcharchive/matcharchive-scores.collection';
 import { take } from 'rxjs/operators';
 import { MatchArchiveCollection } from '../../../@core/collections/matcharchive/matcharchive.collection';
 import { Observable } from 'rxjs';
@@ -12,10 +11,18 @@ import { Observable } from 'rxjs';
   templateUrl: './wvw-chart.component.html',
   styleUrls: ['./wvw-chart.component.scss'],
 })
-export class WvwChartComponent implements AfterViewInit, OnChanges {
+export class WvwChartComponent implements OnChanges {
   @Input() match: Match;
   @Input() data: string;
   @Input() theme: any;
+
+  loadingOptions = {
+    text: 'Loading',
+    color: '#4ca6ff',
+    textColor: '#fff',
+    maskColor: 'rgba(0, 0, 0, 0.35)',
+    zlevel: 0,
+  };
 
   options = {
     tooltip: {
@@ -77,16 +84,15 @@ export class WvwChartComponent implements AfterViewInit, OnChanges {
     private archive: MatchArchiveService,
   ) { }
 
-  ngAfterViewInit() {
-    this.getChartData();
-  }
-
   ngOnChanges() {
-    this.getChartData();
+    if (this.echartsInstance) {
+      this.getChartData();
+    }
   }
 
   getChartData() {
     const match = this.match;
+    this.echartsInstance.showLoading('default', this.loadingOptions);
     if (this.data.toLowerCase() === 'scores') {
       this.getChart(this.archive.scores(match));
     } else if (this.data.toLowerCase() === 'kd') {
@@ -217,10 +223,13 @@ export class WvwChartComponent implements AfterViewInit, OnChanges {
       color: theme.color,
       series: data,
     };
+
+    this.echartsInstance.hideLoading();
   }
 
   onChartInit(inst) {
     this.echartsInstance = inst;
+    this.getChartData();
   }
 
 }
