@@ -25,6 +25,8 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
   timeEnd: NgbTimeStruct;
 
   source: LocalDataSource = new LocalDataSource();
+  kdTableLoading = true;
+  loading = true;
 
   // Settings for KDR data table.
   settings = {
@@ -90,7 +92,11 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
     ).pipe(
       tap(([_, params]) => {
         this.matchService.matchKdData(this.selectedRegion(params), parseInt(params.get('tier'), 10))
-          .subscribe((data) => this.source.load(data));
+          .subscribe((data) => {
+            this.source.load(data);
+            this.kdTableLoading = false;
+            this.loading = false;
+          });
       }),
       map(([matches, params, theme]) => {
         const match = matches

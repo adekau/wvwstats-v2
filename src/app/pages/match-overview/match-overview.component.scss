@@ -20,6 +20,11 @@
     flex-flow: row nowrap;
     align-items: center;
   }
+  
+  .loading { 
+    min-height: 70px;
+    margin-bottom: 22px;
+  }
 
   @include media-breakpoint-down(sm) {
     ngx-traffic {
