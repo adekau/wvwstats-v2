@@ -25,6 +25,14 @@
     .neg {
       color: nb-theme(color-danger);
     }
+
+    .no-change {
+      color: nb-theme(color-fg-text);
+    }
+
+    .table-col-center {
+      text-align: center;
+    }
   }
 
   @include media-breakpoint-down(sm) {

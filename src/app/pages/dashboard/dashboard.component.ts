@@ -42,6 +42,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       rankChange: {
         title: '',
         type: 'html',
+        class: 'table-col-center',
         filter: false,
       },
       server: {
