@@ -17,6 +17,16 @@
     margin-bottom: 22px;
   }
 
+  ::ng-deep {
+    .pos {
+      color: nb-theme(color-success);
+    }
+
+    .neg {
+      color: nb-theme(color-danger);
+    }
+  }
+
   @include media-breakpoint-down(sm) {
     ngx-traffic {
       display: none;

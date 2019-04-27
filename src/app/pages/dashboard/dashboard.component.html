@@ -15,8 +15,8 @@
       <nb-card-header>
         Server Rankings
       </nb-card-header>
-      <nb-card-body>
-        <ng2-smart-table [settings]="settings" [source]="[]"></ng2-smart-table>
+      <nb-card-body [nbSpinner]="glickoTableLoading">
+        <ng2-smart-table [settings]="settings" [source]="glickoTableSource"></ng2-smart-table>
       </nb-card-body>
     </nb-card>
   </div>
