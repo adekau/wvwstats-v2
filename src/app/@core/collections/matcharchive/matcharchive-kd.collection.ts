@@ -12,9 +12,9 @@ export class MatchArchiveKDCollection extends MatchArchiveCollection {
       const kdObj = {
         snapshot_time: val.snapshot_time,
         kd: {
-          red: val.kills.red / relatedDeathsObj.deaths.red,
-          blue: val.kills.blue / relatedDeathsObj.deaths.blue,
-          green: val.kills.green / relatedDeathsObj.deaths.green,
+          red: parseFloat((val.kills.red / relatedDeathsObj.deaths.red).toFixed(4)),
+          blue: parseFloat((val.kills.blue / relatedDeathsObj.deaths.blue).toFixed(4)),
+          green: parseFloat((val.kills.green / relatedDeathsObj.deaths.green).toFixed(4)),
         },
       };
 
