@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatchArchiveService } from '../../../@core/services/match-archive.service';
 import { Match } from '../../../@core/models/match.model';
 import { MatchServerRank } from '../../../@core/enums/matchserverrank.enum';
@@ -11,10 +11,11 @@ import { Observable } from 'rxjs';
   templateUrl: './wvw-chart.component.html',
   styleUrls: ['./wvw-chart.component.scss'],
 })
-export class WvwChartComponent implements OnChanges {
+export class WvwChartComponent implements OnInit, OnChanges {
   @Input() match: Match;
   @Input() data: string;
   @Input() theme: any;
+  @Output('init') init$ = new EventEmitter<WvwChartComponent>();
 
   loadingOptions = {
     text: 'Loading',
@@ -84,6 +85,10 @@ export class WvwChartComponent implements OnChanges {
     private archive: MatchArchiveService,
   ) { }
 
+  ngOnInit() {
+    this.init$.emit(this);
+  }
+
   ngOnChanges() {
     if (this.echartsInstance) {
       this.getChartData();
@@ -91,7 +96,7 @@ export class WvwChartComponent implements OnChanges {
   }
 
   getChartData() {
-    const match = this.match;
+    const { match } = this;
     this.echartsInstance.showLoading('default', this.loadingOptions);
     if (this.data.toLowerCase() === 'scores') {
       this.getChart(this.archive.scores(match));
@@ -99,6 +104,20 @@ export class WvwChartComponent implements OnChanges {
       this.getChart(this.archive.kd(match));
     } else if (this.data.toLowerCase() === 'ppt') {
       this.getChart(this.archive.ppt(match));
+    } else {
+      throw new Error('Invalid chart data type.');
+    }
+  }
+
+  reloadChart() {
+    const { match } = this;
+    this.echartsInstance.showLoading('default', this.loadingOptions);
+    if (this.data.toLowerCase() === 'scores') {
+      this.getChart(this.archive.reloadScores(match));
+    } else if (this.data.toLowerCase() === 'kd') {
+      this.getChart(this.archive.reloadKd(match));
+    } else if (this.data.toLowerCase() === 'ppt') {
+      this.getChart(this.archive.reloadPpt(match));
     } else {
       throw new Error('Invalid chart data type.');
     }
