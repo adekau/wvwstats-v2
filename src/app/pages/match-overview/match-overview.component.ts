@@ -140,7 +140,7 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
       throw new Error('No region provided.');
     }
   }
-  
+
   openGraphs() {
     this.windowService.open(GraphsComponent, { title: 'Graphs' });
   }
