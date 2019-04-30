@@ -49,7 +49,7 @@
     </nb-card>
 
     <!-- Borderland Data -->
-    <nb-card>
+    <nb-card accent="info">
       <nb-card-header>
         Server K/Ds
       </nb-card-header>
@@ -60,23 +60,25 @@
 
     <!-- Graphs -->
     <nb-card accent="info">
-      <nb-card-header>
+      <nb-card-header class="graph-header">
         K/D Evolution
+        <button nbButton outline status="info" (click)="reloadKdGraph()">Reload</button>
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="match$ | async as match">
-          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="kd"></ngx-wvw-chart>
+          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="kd" (init)="initKdGraph($event)"></ngx-wvw-chart>
         </div>
       </nb-card-body>
     </nb-card>
 
-    <nb-card>
-      <nb-card-header>
+    <nb-card accent="info">
+      <nb-card-header class="graph-header">
         PPT Evolution
+        <button nbButton outline status="info" (click)="reloadPptGraph()">Reload</button>
       </nb-card-header>
       <nb-card-body>
         <div *ngIf="match$ | async as match">
-          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="ppt"></ngx-wvw-chart>
+          <ngx-wvw-chart [match]="match" [theme]="jstheme" data="ppt" (init)="initPptGraph($event)"></ngx-wvw-chart>
         </div>
       </nb-card-body>
     </nb-card>

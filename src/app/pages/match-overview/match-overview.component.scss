@@ -21,6 +21,14 @@
     align-items: center;
   }
   
+  .graph-header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
   .loading {
     min-height: 70px;
     margin-bottom: 22px;
