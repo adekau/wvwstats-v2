@@ -15,7 +15,7 @@ export class WvwChartComponent implements OnInit, OnChanges {
   @Input() match: Match;
   @Input() data: string;
   @Input() theme: any;
-  @Output('init') init = new EventEmitter<WvwChartComponent>();
+  @Output() init = new EventEmitter<WvwChartComponent>();
 
   loadingOptions = {
     text: 'Loading',
