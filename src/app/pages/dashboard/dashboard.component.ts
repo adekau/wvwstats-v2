@@ -17,9 +17,7 @@ import { WorldService } from '../../@core/services/world.service';
 export class DashboardComponent implements OnDestroy, OnInit {
   private alive: boolean = true;
   private matches$: Observable<MatchCollection>;
-  subscription: Subscription;
   matches: MatchCollection;
-  onRetrySubscription: Subscription;
   loading = true;
 
   // Settings for the Glicko rankings.
@@ -83,8 +81,9 @@ export class DashboardComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.matches$ = this.matchService.matches;
-    this.subscription = this.route.url
+    this.route.url
       .pipe(
+        takeWhile(() => this.alive),
         mergeMap(reg =>
           this.matches$.pipe(
             map(matches => matches.region(this.regionFromString(reg[0].path))),
@@ -94,12 +93,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
       .subscribe(matches => {
         this.matches = matches;
         this.loading = false;
-      }, this.showErrorToast);
-
-    // subscribe to onRetry event of the match service
-    // to show a message that a request will be retried.
-    this.onRetrySubscription = this.matchService.onRetry
-      .subscribe(status => this.showErrorToast.apply(this, [status]));
+      });
 
     // Subscription for glicko ranks table.
     zip(
@@ -129,20 +123,7 @@ export class DashboardComponent implements OnDestroy, OnInit {
     }
   }
 
-  showErrorToast(status) {
-    this.toast.danger(
-      `Failed to update match data, try checking your network connection.
-       Will try updating again in 15 seconds.`,
-      `Network Error (Error code: ${status})`,
-      {
-        duration: 7500,
-      },
-    );
-  }
-
   ngOnDestroy() {
     this.alive = false;
-    this.subscription.unsubscribe();
-    this.onRetrySubscription.unsubscribe();
   }
 }
