@@ -33,10 +33,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.analytics.trackPageViews();
     this.onlineSubscription = this.connection.online.subscribe(() => {
-      this.toast.info('Internet connection restored.', 'Network');
+      this.toast.info('Internet connection restored.', 'Network Status');
     });
     this.offlineSubscription = this.connection.offline.subscribe(() => {
-      this.toast.danger('Internet connection lost.', 'Network');
+      this.toast.danger('Internet connection lost.', 'Network Status');
     });
   }
 
