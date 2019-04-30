@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatchService } from '../../@core/services/match.service';
-import { Observable, Subscription, zip } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { map, mergeMap, takeWhile } from 'rxjs/operators';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { MatchCollection } from '../../@core/collections/match.collection';
