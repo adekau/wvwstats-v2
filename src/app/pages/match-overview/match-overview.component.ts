@@ -9,6 +9,8 @@ import { NbThemeService, NbWindowService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { GraphsComponent } from '../graphs/graphs.component';
+import { MatchArchiveService } from '../../@core/services/match-archive.service';
+import { WvwChartComponent } from '../../@theme/components';
 
 @Component({
   selector: 'ngx-match-overview',
@@ -77,9 +79,13 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
     },
   };
 
+  kdGraph: WvwChartComponent;
+  pptGraph: WvwChartComponent;
+
   constructor(
     public route: ActivatedRoute,
     public matchService: MatchService,
+    protected archiveService: MatchArchiveService,
     private theme: NbThemeService,
     private windowService: NbWindowService,
   ) { }
@@ -134,12 +140,28 @@ export class MatchOverviewComponent implements AfterViewInit, OnDestroy {
       throw new Error('No region provided.');
     }
   }
+  
+  openGraphs() {
+    this.windowService.open(GraphsComponent, { title: 'Graphs' });
+  }
+
+  initKdGraph(event) {
+    this.kdGraph = event;
+  }
+
+  initPptGraph(event) {
+    this.pptGraph = event;
+  }
+
+  reloadKdGraph() {
+    this.kdGraph.reloadChart();
+  }
+
+  reloadPptGraph() {
+    this.pptGraph.reloadChart();
+  }
 
   ngOnDestroy() {
     this.alive = false;
-  }
-
-  openGraphs() {
-    this.windowService.open(GraphsComponent, { title: 'Graphs' });
   }
 }
