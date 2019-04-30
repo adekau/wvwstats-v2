@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { API_ROUTES } from './api.config';
 import { IMatch, MatchData } from '../models/match.model';
 import { Observable, timer, forkJoin, Subject } from 'rxjs';
@@ -12,8 +12,9 @@ import { WorldCollection } from '../collections/world.collection';
 import { GW2Region } from '../enums/gw2region.enum';
 import { GW2MapType } from '../enums/gw2maptype.enum';
 import { Map } from '../models/maps.model';
+import { DEFAULT_BUFFER_SIZE } from './buffer.token';
 
-const BUFFER_SIZE: number = 1;
+const ONE_SEC: number = 1e3;
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ export class MatchService extends MatchData {
   private onRetry$: Subject<number>;
 
   constructor(
+    @Inject(DEFAULT_BUFFER_SIZE) private buffer: number,
     private http: HttpClient,
     public worlds: WorldService,
     public objectives: ObjectiveService,
@@ -37,10 +39,10 @@ export class MatchService extends MatchData {
 
   get matches(): Observable<MatchCollection> {
     if (!this.matches$) {
-      const timer$ = timer(0, 15000);
+      const timer$ = timer(0, ONE_SEC * 20);
       this.matches$ = timer$.pipe(
         switchMap(_ => this.requestMatches()),
-        shareReplay(BUFFER_SIZE),
+        shareReplay(this.buffer),
       );
     }
 
@@ -104,14 +106,6 @@ export class MatchService extends MatchData {
     return this.http
       .get<IMatch[]>(API_ROUTES.allMatches)
       .pipe(
-        retryWhen(err => {
-          return err.pipe(
-            tap(error => this.onRetry$.next(error.status)),
-            // basically just delay it until the timer goes off again.
-            // This observable will be unsubscribed from by switchMap above.
-            delay(15000),
-          );
-        }),
         map(res => new MatchCollection(res, worlds, objectives)),
       );
   }
