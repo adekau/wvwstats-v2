@@ -5,7 +5,6 @@ import { map, mergeMap, takeWhile } from 'rxjs/operators';
 import { GW2Region } from '../../@core/enums/gw2region.enum';
 import { MatchCollection } from '../../@core/collections/match.collection';
 import { ActivatedRoute } from '@angular/router';
-import { NbToastrService } from '@nebular/theme';
 import { GlickoService } from '../../@core/services/glicko.service';
 import { WorldService } from '../../@core/services/world.service';
 
@@ -76,7 +75,6 @@ export class DashboardComponent implements OnDestroy, OnInit {
     protected glickoService: GlickoService,
     protected worldService: WorldService,
     protected route: ActivatedRoute,
-    private toast: NbToastrService,
   ) { }
 
   ngOnInit() {
