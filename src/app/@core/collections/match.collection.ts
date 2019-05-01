@@ -22,7 +22,32 @@ export class MatchCollection {
 
   find(region: GW2Region, tier: number): Match {
     const matchId = `${region.valueOf()}-${tier}`;
-    return this.matches.filter(match => matchId === match.id)[0];
+    return this.matches.find(match => matchId === match.id);
+  }
+
+  findWorld(world: number)
+  findWorld(world: string)
+  findWorld(world: number | string) {
+    return this.matches.find(match => {
+      let involvedWorlds: Array<number | string>;
+      if (typeof world === 'number') {
+        involvedWorlds = [
+          ...match.all_worlds.red,
+          ...match.all_worlds.blue,
+          ...match.all_worlds.green,
+        ];
+      } else if (typeof world === 'string') {
+        involvedWorlds = [
+          ...match.allWorlds.red.worlds.map(w => w.name),
+          ...match.allWorlds.blue.worlds.map(w => w.name),
+          ...match.allWorlds.green.worlds.map(w => w.name),
+        ];
+      } else {
+        throw Error('Wrong world data type for findWorld.');
+      }
+
+      return involvedWorlds.includes(world);
+    });
   }
 
   region(region: GW2Region): MatchCollection {

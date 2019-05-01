@@ -11,11 +11,14 @@
     </nb-select> -->
 
     <select class="form-control" placeholder="Select World" (change)="changeWorld($event)">
+      <option value="" disabled [selected]="!selectedWorld" style="display:none;">Select World</option>
       <optgroup label="North America">
-        <option *ngFor="let na of naWorlds" [value]="na.name">{{ na.name }}</option>
+        <option *ngFor="let na of naWorlds" [value]="na.name" [selected]="na.name === selectedWorld">{{ na.name }}
+        </option>
       </optgroup>
       <optgroup label="Europe">
-        <option *ngFor="let eu of euWorlds" [value]="eu.name">{{ eu.name }}</option>
+        <option *ngFor="let eu of euWorlds" [value]="eu.name" [selected]="eu.name === selectedWorld">{{ eu.name }}
+        </option>
       </optgroup>
     </select>
   </nb-card-body>
