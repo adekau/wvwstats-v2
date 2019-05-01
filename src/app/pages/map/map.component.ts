@@ -64,6 +64,7 @@ export class MapComponent implements OnInit, OnDestroy {
       .subscribe(([params, mc]) => {
         this.selectedWorld = params.get('world');
         if (this.selectedWorld) {
+          this.loading = true;
           this.match = mc.findWorld(this.selectedWorld);
           const maps = {};
           this.match.maps.forEach(map => {
@@ -74,6 +75,7 @@ export class MapComponent implements OnInit, OnDestroy {
             maps[map.id] = indexedObjectives;
           });
           this.updateMarkers(maps);
+          this.loading = false;
         }
       });
 
@@ -95,7 +97,7 @@ export class MapComponent implements OnInit, OnDestroy {
         );
     }
 
-    return this.icons$
+    return this.icons$;
   }
 
   handleClick(event) {
@@ -133,7 +135,6 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   prepareIcons() {
-    console.log('PREPARING THE ICONS!');
     const types = ['camp', 'tower', 'keep', 'castle'];
     const colors = ['green', 'blue', 'red', 'neutral'];
 

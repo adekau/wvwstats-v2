@@ -25,8 +25,6 @@ export class MatchCollection {
     return this.matches.find(match => matchId === match.id);
   }
 
-  findWorld(world: number)
-  findWorld(world: string)
   findWorld(world: number | string) {
     return this.matches.find(match => {
       let involvedWorlds: Array<number | string>;
