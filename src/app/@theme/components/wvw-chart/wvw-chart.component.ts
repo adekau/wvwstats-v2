@@ -46,7 +46,7 @@ export class WvwChartComponent implements OnInit, OnChanges {
           readOnly: true,
         },
         dataZoom: {
-          yAxisIndex: 'none',
+          // yAxisIndex: 'none',
           title: {
             zoom: 'Zoom Selection',
             back: 'Undo Zoom',
